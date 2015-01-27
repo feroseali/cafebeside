@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class HomeActivity extends Activity {
@@ -13,8 +14,15 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Toast.makeText(getApplicationContext(), "Welcome To Cafe Beside.\nPlease place your order.", Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    protected void onStart() {
+    	// TODO Auto-generated method stub
+    	super.onStart();
+    	
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

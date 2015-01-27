@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-public class SpalshActivity extends Activity {
-	private int count = 2000;
+public class SplashActivity extends Activity {
+	private int delay = 2000;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -16,11 +16,11 @@ public class SpalshActivity extends Activity {
 		// For Splash
         new Handler().postDelayed(new Runnable(){
 		 public void run() {
-             Intent mainIntent = new Intent(SpalshActivity.this,HomeActivity.class);
-             SpalshActivity.this.startActivity(mainIntent);
-             SpalshActivity.this.finish();
+             Intent mainIntent = new Intent(SplashActivity.this,HomeActivity.class);
+             SplashActivity.this.startActivity(mainIntent);
+             SplashActivity.this.finish();
          }
-     }, count);
+     }, delay);
 	}	
 	
 }
