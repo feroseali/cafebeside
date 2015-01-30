@@ -26,6 +26,10 @@
             android:name=".HomeActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".TodaysMenu"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 
