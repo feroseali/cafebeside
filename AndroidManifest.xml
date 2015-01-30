@@ -30,6 +30,10 @@
             android:name=".TodaysMenu"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".MainMenu"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 

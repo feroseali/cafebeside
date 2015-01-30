@@ -6,4 +6,7 @@
     <string name="logo">Cafe Beside Logo</string>
     <string name="description">This is the grid menu</string>
 
+    <string name="menu_header">Today\'s Menu</string>
+     <string name="team">TeamCEMP</string>
+       <string name="bottom_item">End Scroll view\n---Bottom items---</string>
 </resources>

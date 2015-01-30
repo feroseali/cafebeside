@@ -35,7 +35,7 @@ public class HomeActivity extends Activity implements OnItemClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toast.makeText(getApplicationContext(), "Welcome To Cafe Beside.\nPlease place your order.", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Welcome To Cafe Beside.", Toast.LENGTH_SHORT).show();
         GridView gridview = (GridView) findViewById(R.id.dashboard_grid);
         gridview.setAdapter(new ImageAdapter(this));
         gridview.setOnItemClickListener(this);
