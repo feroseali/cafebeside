@@ -36,6 +36,15 @@
         </intent-filter>
         </receiver>
         
+
+        <activity
+            android:name=".screenMappers.TodaysMenu"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".screenMappers.MainMenu"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 	
 </manifest>
