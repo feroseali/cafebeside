@@ -7,13 +7,16 @@
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="19" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
 	<application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name=".screenMappers.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
@@ -23,10 +26,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".screenMappers.HomeActivity"
             android:screenOrientation="portrait">
         </activity>
+        
+        <receiver android:name=".backgroundRunners.WifiReciever">
+            <intent-filter>
+             <action android:name="android.net.wifi.STATE_CHANGE" />
+        </intent-filter>
+        </receiver>
+        
     </application>
-
-
+	
 </manifest>

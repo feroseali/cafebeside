@@ -1,4 +1,6 @@
-package com.team.cafebeside;
+package com.team.cafebeside.screenMappers;
+
+import com.team.cafebeside.R;
 
 import android.app.Activity;
 import android.content.Intent;

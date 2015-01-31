@@ -1,5 +1,8 @@
-package com.team.cafebeside;
+package com.team.cafebeside.screenMappers;
 
+
+import com.team.cafebeside.R;
+import com.team.cafebeside.configs.Configuration;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,8 +18,23 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toast.makeText(getApplicationContext(), "Welcome To Cafe Beside.\nPlease place your order.", Toast.LENGTH_LONG).show();
+        Configuration.IS_APP_RUNNING	=	true;
     }
 
+    @Override
+    protected void onResume() {
+    	// TODO Auto-generated method stub
+    	super.onResume();
+    	Configuration.IS_APP_RUNNING	=	true;
+    }
+    
+    @Override
+    protected void onPause() {
+    	// TODO Auto-generated method stub
+    	super.onPause();
+    	Configuration.IS_APP_RUNNING	=	false;
+    }
+    
     @Override
     protected void onStart() {
     	// TODO Auto-generated method stub
