@@ -1,6 +1,5 @@
 package com.team.cafebeside.screenMappers;
 
-
 import com.team.cafebeside.R;
 import com.team.cafebeside.configs.Configuration;
 
@@ -25,13 +24,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+/**
+ * @author Little Adam
+ *
+ */
 public class HomeActivity extends Activity implements OnItemClickListener {
 
 	static final LauncherIcon[] ICONS = {
-        new LauncherIcon(R.drawable.icon_one, "Todays Menu", "icon_one.png"),
-        new LauncherIcon(R.drawable.icon_two, "My Orders", "icon_two.png"),
-        new LauncherIcon(R.drawable.icon_one, "My Bills", "icon_one.png"),
-        new LauncherIcon(R.drawable.icon_two, "Contact", "icon_two.png"),
+        new LauncherIcon(R.drawable.icon_five, "Todays Menu", "icon_five.png"),
+        new LauncherIcon(R.drawable.icon_four, "My Orders", "icon_four.png"),
+        new LauncherIcon(R.drawable.icon_two, "My Bills", "icon_two.png"),
+        new LauncherIcon(R.drawable.icon_seven, "Contact", "icon_seven.png"),
 };
 	
     @Override
@@ -57,9 +60,22 @@ public class HomeActivity extends Activity implements OnItemClickListener {
     
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-        Intent intent = new Intent(this, TodaysMenu.class);
-       // intent.putExtra(EXTRA_MAP, ICONS[position].map);
-        startActivity(intent);
+    	
+        Toast.makeText(getApplicationContext(), "Clicked Item on position"+position, Toast.LENGTH_SHORT).show();
+        switch(position){
+        case 0:	Intent i1 = new Intent(this, MainMenu.class);
+        		startActivity(i1);
+        		break;
+        case 1: Intent i2 = new Intent(this, MyOrders.class);
+				startActivity(i2);	
+				break;
+        case 2: Intent i3 = new Intent(this, MyBills.class);
+				startActivity(i3);	
+				break;
+        case 3: Intent i4 = new Intent(this, TodaysMenu.class);
+				startActivity(i4);	
+				break;		
+        }
     }
     
     static class LauncherIcon {
