@@ -17,6 +17,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,9 +38,18 @@ public class WifiReciever extends BroadcastReceiver {
 					.getSystemService(Context.WIFI_SERVICE);
 			WifiInfo wifiInfo = wifiManager.getConnectionInfo();
 			//Log.e("RECIEVING", "BROADCAST INFO with: " + wifiInfo);
+			
+			 int deviceVersion= Build.VERSION.SDK_INT;
+				String ssid = wifiInfo.getSSID().toString();
 
-			String ssid = wifiInfo.getSSID();
+		     if (deviceVersion >= 17){
+		         if (ssid.startsWith("\"") && ssid.endsWith("\"")){
+		             ssid = ssid.substring(1, ssid.length()-1);
+		         }
+		     }
+
 			//Log.e("CAFEBESIDE", "CONNECTED TO : " + ssid);
+			//Toast.makeText(arg0, "CONNECVTED TO "+ssid, Toast.LENGTH_LONG).show();
 			if (ssid != null) {
 				if (ssid.trim().equals(Configuration.CAFE_WIFI_SSID.trim())) {
 					//Log.e("CAFEBESIDE NOTIFICATION", "CONNECTED TO CAFE");

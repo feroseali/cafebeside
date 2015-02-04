@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 
 import com.team.cafebeside.configs.Configuration;
 import com.team.cafebeside.screenMappers.SplashActivity;
@@ -24,18 +25,25 @@ public class CafeNetworkValidator {
 					.getSystemService(Context.WIFI_SERVICE);
 			WifiInfo wifiInfo = wifiManager.getConnectionInfo();
 
-			String ssid = wifiInfo.getSSID();
+			int deviceVersion = Build.VERSION.SDK_INT;
+			String ssid = wifiInfo.getSSID().toString();
+
+			if (deviceVersion >= 17) {
+				if (ssid.startsWith("\"") && ssid.endsWith("\"")) {
+					ssid = ssid.substring(1, ssid.length() - 1);
+				}
+			}
 			if (ssid != null) {
 				if (ssid.trim().equals(Configuration.CAFE_WIFI_SSID.trim())) {
 					return true;
-				}else{
+				} else {
 					return false;
 				}
-			}else{
+			} else {
 				return false;
 			}
 
-		}else{
+		} else {
 			return false;
 		}
 
