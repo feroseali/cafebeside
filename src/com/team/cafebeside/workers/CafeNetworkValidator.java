@@ -1,7 +1,6 @@
 package com.team.cafebeside.workers;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -9,7 +8,6 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 
 import com.team.cafebeside.configs.Configuration;
-import com.team.cafebeside.screenMappers.SplashActivity;
 
 public class CafeNetworkValidator {
 

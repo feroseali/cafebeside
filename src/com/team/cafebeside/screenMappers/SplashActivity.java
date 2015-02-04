@@ -1,3 +1,4 @@
+
 package com.team.cafebeside.screenMappers;
 
 import com.team.cafebeside.R;
@@ -7,6 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+/**
+ * @author Little Adam
+ *
+ */
 public class SplashActivity extends Activity {
 	private int delay = 2000;
 	@Override

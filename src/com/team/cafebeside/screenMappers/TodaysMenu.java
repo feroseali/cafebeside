@@ -3,8 +3,6 @@ package com.team.cafebeside.screenMappers;
 import java.util.ArrayList;
 
 import com.team.cafebeside.R;
-import com.team.cafebeside.R.id;
-import com.team.cafebeside.R.layout;
 import com.team.cafebeside.workers.Item;
 
 import android.app.Activity;
@@ -32,21 +30,12 @@ public class TodaysMenu extends Activity {
 		 * Add item into arraylist
 		 */
 		mArrayListData = new ArrayList<Item>();
-		mArrayListData.add(new Item("Manish", "Srivastava"));
-		mArrayListData.add(new Item("Sachin", "Tendulker"));
-		mArrayListData.add(new Item("Ricky", "Pointing"));
-		mArrayListData.add(new Item("Manish", "Srivastava"));
-		mArrayListData.add(new Item("Sachin", "Tendulker"));
-		mArrayListData.add(new Item("Ricky", "Pointing"));
-		mArrayListData.add(new Item("Manish", "Srivastava"));
-		mArrayListData.add(new Item("Sachin", "Tendulker"));
-		mArrayListData.add(new Item("Ricky", "Pointing"));
-		mArrayListData.add(new Item("Manish", "Srivastava"));
-		mArrayListData.add(new Item("Sachin", "Tendulker"));
-		mArrayListData.add(new Item("Ricky", "Pointing"));
-		mArrayListData.add(new Item("Manish", "Srivastava"));
-		mArrayListData.add(new Item("Sachin", "Tendulker"));
-		mArrayListData.add(new Item("Ricky", "Pointing"));
+		mArrayListData.add(new Item("South Indian Dishes"));
+		mArrayListData.add(new Item("Desserts"));
+		mArrayListData.add(new Item("Beverages"));
+		mArrayListData.add(new Item("Ice Creams"));
+		mArrayListData.add(new Item("Specials"));
+
 
 		/***
 		 * adding item into listview
@@ -64,16 +53,16 @@ public class TodaysMenu extends Activity {
 			 */
 			TextView mFirstName = (TextView) mLinearView
 					.findViewById(R.id.textViewName);
-			TextView mLastName = (TextView) mLinearView
-					.findViewById(R.id.textViewLastName);
+/*			TextView mLastName = (TextView) mLinearView
+					.findViewById(R.id.textViewLastName);*/
 
 			/**
 			 * set item into row
 			 */
 			final String fName = mArrayListData.get(i).getmFirstName();
-			final String lName = mArrayListData.get(i).getmLastName();
+			//final String lName = mArrayListData.get(i).getmLastName();
 			mFirstName.setText(fName);
-			mLastName.setText(lName);
+			//mLastName.setText(lName);
 
 			/**
 			 * add view in top linear
@@ -92,6 +81,8 @@ public class TodaysMenu extends Activity {
 					// TODO Auto-generated method stub
 					Toast.makeText(TodaysMenu.this, "Clicked item;" + fName,
 							Toast.LENGTH_SHORT).show();
+				//	Intent nintent = new Intent(TodaysMenu.this,MainMenu.class);
+					//startActivity(nintent);
 				}
 			});
 		}

@@ -26,13 +26,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+/**
+ * @author Little Adam
+ *
+ */
 public class HomeActivity extends Activity implements OnItemClickListener {
 
 	static final LauncherIcon[] ICONS = {
-			new LauncherIcon(R.drawable.icon_one, "Todays Menu", "icon_one.png"),
-			new LauncherIcon(R.drawable.icon_two, "My Orders", "icon_two.png"),
-			new LauncherIcon(R.drawable.icon_one, "My Bills", "icon_one.png"),
-			new LauncherIcon(R.drawable.icon_two, "Contact", "icon_two.png"), };
+        new LauncherIcon(R.drawable.icon_five, "Todays Menu", "icon_five.png"),
+        new LauncherIcon(R.drawable.icon_four, "My Orders", "icon_four.png"),
+        new LauncherIcon(R.drawable.icon_two, "My Bills", "icon_two.png"),
+        new LauncherIcon(R.drawable.icon_seven, "Contact", "icon_seven.png"),
+};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,18 +55,20 @@ public class HomeActivity extends Activity implements OnItemClickListener {
 		
 		if(!isConnected){
 			showAlert();
-			///Toast.makeText(this, "You are not Connected to CafeBeside Network", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "You are not Connected to CafeBeside Network "+isConnected , Toast.LENGTH_LONG).show();
 		}
 		GridView gridview = (GridView) findViewById(R.id.dashboard_grid);
 		gridview.setAdapter(new ImageAdapter(this));
 		gridview.setOnItemClickListener(this);
 		gridview.setOnTouchListener(new OnTouchListener() {
 
+
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
 				return false;
 			}
 		});
+
 	}
 
 	private void showAlert(){
@@ -70,6 +78,7 @@ public class HomeActivity extends Activity implements OnItemClickListener {
 	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 	        public void onClick(DialogInterface dialog, int which) { 
 	            //DO ANY CAFEBESIDE OPERATION
+	        	finish();
 	        }
 	     })
 	    
@@ -77,12 +86,24 @@ public class HomeActivity extends Activity implements OnItemClickListener {
 	     .show();
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-		Intent intent = new Intent(this, TodaysMenu.class);
-		// intent.putExtra(EXTRA_MAP, ICONS[position].map);
-		startActivity(intent);
-	}
+    @Override
+    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+    	
+        switch(position){
+        case 0:	Intent i1 = new Intent(this, MainMenu.class);
+        		startActivity(i1);
+        		break;
+        case 1: Intent i2 = new Intent(this, MyOrders.class);
+				startActivity(i2);	
+				break;
+        case 2: Intent i3 = new Intent(this, MyBills.class);
+				startActivity(i3);	
+				break;
+        case 3: Intent i4 = new Intent(this, TodaysMenu.class);
+				startActivity(i4);	
+				break;		
+        }
+    }
 
 	static class LauncherIcon {
 		final String text;
