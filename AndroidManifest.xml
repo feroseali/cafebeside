@@ -54,6 +54,10 @@
         <activity
             android:name=".screenMappers.MyOrders"
             android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".screenMappers.LoginPage"
+            android:screenOrientation="portrait">
         </activity>               
     </application>
 	
