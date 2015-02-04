@@ -1,9 +1,3 @@
-/*
- * Author	:	Anooj Krishnan G
- * Date		:	31/01/2015
- */
-
-
 package com.team.cafebeside.backgroundRunners;
 
 import com.team.cafebeside.configs.Configuration;
