@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -97,6 +99,8 @@ public class MainMenu extends Activity {
 					if(isFirstViewClick==false){
 						isFirstViewClick=true;
 						mImageArrowFirst.setBackgroundResource(R.drawable.arw_down);
+						Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+						mLinearScrollSecond.setAnimation(slide);
 						mLinearScrollSecond.setVisibility(View.VISIBLE);
 						
 					}else{
@@ -131,6 +135,8 @@ public class MainMenu extends Activity {
 					mImageArrowSecond.setBackgroundResource(R.drawable.arw_lt);
 					}
 					else{
+						//Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+						//mLinearScrollThird.setAnimation(slide);
 						mLinearScrollThird.setVisibility(View.VISIBLE);
 						mImageArrowSecond.setBackgroundResource(R.drawable.arw_down);
 					}
@@ -143,6 +149,8 @@ public class MainMenu extends Activity {
 						if(isSecondViewClick==false){
 							isSecondViewClick=true;
 							mImageArrowSecond.setBackgroundResource(R.drawable.arw_down);
+							Animation slide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+							mLinearScrollThird.setAnimation(slide);
 							mLinearScrollThird.setVisibility(View.VISIBLE);
 							
 						}else{
