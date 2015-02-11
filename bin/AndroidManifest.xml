@@ -59,10 +59,10 @@
             android:name=".screenMappers.LoginPage"
             android:screenOrientation="portrait">
         </activity>  
-         <activity
-            android:name=".screenMappers.PosttoServer"
+        <activity
+            android:name=".screenMappers.RegisterPage"
             android:screenOrientation="portrait">
-        </activity>                              
+        </activity>                     
     </application>
 	
 </manifest>

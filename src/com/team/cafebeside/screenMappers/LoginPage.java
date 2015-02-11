@@ -24,6 +24,7 @@ public class LoginPage extends Activity{
 	private EditText username,userpass;
 	public static String usermail = null;
 	public static String upassword = null;
+
 	private Button mSignIn;			// Login button
 	private Button mSignUp;			// Register Button
 	@Override
@@ -34,7 +35,7 @@ public class LoginPage extends Activity{
 		
 		username = (EditText) findViewById(R.id.etUserName);
 		userpass = (EditText) findViewById(R.id.etPass);
-		
+
 		//Login Button & Action
 		mSignIn	=	(Button) findViewById(R.id.btnSingIn);
 		//final Intent mHome	=	new Intent(this,HomeActivity.class);
@@ -70,6 +71,7 @@ public class LoginPage extends Activity{
 				startActivity(mReg);
 			}
 		});	
+
 	}
 	
 	private void showAlert(String title,String message){

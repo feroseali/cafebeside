@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ public class RegisterPage extends Activity {
 	private EditText uname,uemail,umobile,upass,ucpass;
 	private Button submit_button;
 	private String unm,umail,umob,upwd,ucpwd;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -45,6 +47,7 @@ public class RegisterPage extends Activity {
 		ucpwd = ucpass.getText().toString();
 		
 		submit_button = (Button) findViewById(R.id.signup);
+
 	
 		submit_button.setOnClickListener(new OnClickListener() {
 			
@@ -145,5 +148,4 @@ public class RegisterPage extends Activity {
  
 	}	
 	
-
 }
