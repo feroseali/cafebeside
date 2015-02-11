@@ -11,12 +11,14 @@ import android.widget.Button;
 
 public class LoginPage extends Activity{
 
-	private Button mSignIn;
+	private Button mSignIn;			// Login button
+	private Button mSignUp;			// Register Button
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		//Login Button & Action
 		mSignIn	=	(Button) findViewById(R.id.btnSingIn);
 		final Intent mHome	=	new Intent(this,HomeActivity.class);
 		mSignIn.setOnClickListener(new OnClickListener() {
@@ -27,5 +29,21 @@ public class LoginPage extends Activity{
 				startActivity(mHome);
 			}
 		});
+		
+		//Register Button & Action
+		mSignUp	= (Button) findViewById(R.id.btnSingUp);
+		mSignUp.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent mReg = new Intent(getApplicationContext(),RegisterPage.class);
+				startActivity(mReg);
+			}
+		});
+		
+		
+		
+		
 	}
 }

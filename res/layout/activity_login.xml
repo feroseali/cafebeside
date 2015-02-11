@@ -24,6 +24,7 @@
             android:drawableLeft="@drawable/email"
             android:hint="Email"
             android:padding="10dp"
+            android:singleLine="true"
             android:textColor="@android:color/darker_gray"
             android:textColorHint="#cccccc" />
 
@@ -36,28 +37,33 @@
             android:drawableLeft="@drawable/password"
             android:hint="Password"
             android:padding="10dp"
+            android:singleLine="true"
             android:password="true"
+            android:inputType="textPassword"
             android:textColor="@android:color/darker_gray"
             android:textColorHint="#cccccc" />
 
-        <Button
-            android:id="@+id/btnSingIn"
-            style="@style/DefaultButtonText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@drawable/button_default_bg"
-            android:padding="10dp"
-            android:text="Sign In" />
-        <Button
-            android:id="@+id/btnSingUp"
-            style="@style/DefaultButtonText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@drawable/button_default_bg"
-            android:padding="10dp"
-            android:text="Register" />
+
+
+		<Button
+		    android:id="@+id/btnSingIn"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:padding="10dp"
+		    android:textColor="#ffffff"
+		    android:background="@drawable/mybutton"
+		    android:layout_marginTop="8dp"
+		    android:text="Sign In" />           
+        
+		<Button
+		    android:id="@+id/btnSingUp"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:padding="10dp"
+		    android:textColor="#ffffff"
+		    android:background="@drawable/regbtn"
+		    android:layout_marginTop="3dp"
+		    android:text="Register" />        
     </LinearLayout>
 
 </RelativeLayout>
