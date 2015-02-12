@@ -58,7 +58,11 @@
         <activity
             android:name=".screenMappers.LoginPage"
             android:screenOrientation="portrait">
-        </activity>               
+        </activity>  
+        <activity
+            android:name=".screenMappers.RegisterPage"
+            android:screenOrientation="portrait">
+        </activity>                     
     </application>
 	
 </manifest>

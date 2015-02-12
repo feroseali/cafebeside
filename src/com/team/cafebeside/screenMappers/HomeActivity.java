@@ -48,14 +48,14 @@ public class HomeActivity extends Activity implements OnItemClickListener {
 		
 		
 		
-		Toast.makeText(getApplicationContext(), "Welcome To Cafe Beside.",
-				Toast.LENGTH_SHORT).show();
 		CafeNetworkValidator validator	=	new CafeNetworkValidator();
 		boolean isConnected				=	validator.isConnectedToCafeBeside(this);
 		
 		if(!isConnected){
 			showAlert();
-		Toast.makeText(this, "You are not Connected to CafeBeside Network "+isConnected , Toast.LENGTH_LONG).show();
+		}
+		else{
+			Toast.makeText(getApplicationContext(), "Welcome To Cafe Beside Network.",Toast.LENGTH_SHORT).show();
 		}
 		GridView gridview = (GridView) findViewById(R.id.dashboard_grid);
 		gridview.setAdapter(new ImageAdapter(this));

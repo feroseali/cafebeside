@@ -44,7 +44,7 @@ public class SplashActivity extends Activity {
 		new AlertDialog.Builder(this)
 				.setTitle("Alert")
 				.setMessage(
-						"You are not connected to CafeBeside Network !\n Exiting ..")
+						"You are not connected to CafeBeside Network !")
 				.setPositiveButton(android.R.string.yes,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
