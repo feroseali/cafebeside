@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import com.team.cafebeside.R;
 import com.team.cafebeside.configs.Configuration;
+import com.team.cafebeside.configs.ServerConnector;
 import com.team.cafebeside.networkEngine.HttpRequestWorker;
 
 import android.app.Activity;
@@ -145,7 +146,7 @@ public class LoginPage extends Activity{
             	mObject.put("password",userpass);
             	
             	HttpRequestWorker mWorker = new HttpRequestWorker();
-            	 response = mWorker.PostRequest("http://192.168.0.2/cafebeside/login.php", mObject.toString(), false);
+            	response = mWorker.PostRequest(ServerConnector.LOGIN, mObject.toString(), false);
                 
             	
             	 return response;
