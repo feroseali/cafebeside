@@ -61,7 +61,7 @@ public class HttpRequestWorker {
 			StringEntity se = new StringEntity(content);
 			se.setContentType("application/json");
 			mHttpPost.setEntity(se);
-			mHttpPost.setHeader("json", content);
+			mHttpPost.setHeader(Configuration.GLOBAL_HEADER_KEY, content);
 			if (isHeaderRequired) {
 				mHttpPost.setHeader("username", Configuration.USERNAME);
 			}

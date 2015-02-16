@@ -11,6 +11,7 @@ import com.team.cafebeside.networkEngine.AsyncResponse;
 import com.team.cafebeside.networkEngine.AsyncWorker;
 import com.team.cafebeside.networkEngine.HttpRequestWorker;
 import com.team.cafebeside.networkEngine.PostMan;
+import com.team.cafebeside.workers.SharedPrefSingleton;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -46,9 +47,9 @@ public class LoginPage extends Activity implements AsyncResponse {
 		mAsyncWorker.delegate = this;
 		setContentView(R.layout.activity_login);
 
-		db = openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);
-		db.execSQL("CREATE TABLE IF NOT EXISTS LOGIN(NAME VARCHAR(50),EMAIL VARCHAR(30),PHONE VARCHAR(15),PASSWORD VARCHAR(15),PRIMARY KEY(EMAIL))");
-		db.execSQL("delete from LOGIN");
+		//db = openOrCreateDatabase(DB_NAME, MODE_PRIVATE, null);
+		//db.execSQL("CREATE TABLE IF NOT EXISTS LOGIN(NAME VARCHAR(50),EMAIL VARCHAR(30),PHONE VARCHAR(15),PASSWORD VARCHAR(15),PRIMARY KEY(EMAIL))");
+		//db.execSQL("delete from LOGIN");
 
 		username = (EditText) findViewById(R.id.etUserName);
 		userpass = (EditText) findViewById(R.id.etPass);
@@ -66,6 +67,8 @@ public class LoginPage extends Activity implements AsyncResponse {
 					JSONObject mObject = new JSONObject();
 					mObject.put("username", username.getText().toString());
 					mObject.put("password", userpass.getText().toString());
+					mAsyncWorker = new AsyncWorker(arg0.getContext());
+					mAsyncWorker.delegate=LoginPage.this;
 					mAsyncWorker.execute(ServerConnector.LOGIN, mObject.toString());
 				} catch (Exception ex) {
 
@@ -134,8 +137,13 @@ public class LoginPage extends Activity implements AsyncResponse {
 	public void processFinish(String output) {
 		// TODO Auto-generated method stub
 		Log.e("OnActivity-return", "" + output);
-		if(!output.equals("Success")){
+		if(!output.trim().equals("Success")){
 			showAlert("Alert", "Login Failed");
+		}else{
+			SharedPrefSingleton.getInstance().init(getApplicationContext());
+			SharedPrefSingleton.getInstance().writePreference("isLoggedIn", true);
+			Intent homeIntent	=	new Intent(this,HomeActivity.class);
+			startActivity(homeIntent);
 		}
 	}
 
