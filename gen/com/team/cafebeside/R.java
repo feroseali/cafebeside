@@ -81,8 +81,8 @@ public final class R {
         public static final int name=0x7f090010;
         public static final int pid=0x7f09000f;
         public static final int reg_form=0x7f090005;
+        public static final int regbtn=0x7f09000b;
         public static final int scrollview=0x7f090011;
-        public static final int signup=0x7f09000b;
         public static final int textView1=0x7f09000c;
         public static final int textViewItemName=0x7f09001c;
         public static final int textViewItemPrice=0x7f09001d;
