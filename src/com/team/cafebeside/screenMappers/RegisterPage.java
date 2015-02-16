@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,23 +17,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.team.cafebeside.R;
-import com.team.cafebeside.networkEngine.HttpRequestWorker;
+import com.team.cafebeside.networkEngine.PostMan;
 
 public class RegisterPage extends Activity {
 	
 	public ProgressDialog progress;
 	private EditText uname,uemail,umobile,upass,ucpass;
 	private Button submit_button;
-	private String unm,umail,umob,upwd,ucpwd;
-
+	public String unm,umail,umob,upwd,ucpwd;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reg);
-		
-		Toast.makeText(getApplicationContext(), "Sign up your account",Toast.LENGTH_LONG ).show();
-		
 		uname = (EditText) findViewById(R.id.uname);
 		unm = uname.getText().toString();
 		uemail = (EditText) findViewById(R.id.uemail);
@@ -46,23 +41,33 @@ public class RegisterPage extends Activity {
 		ucpass = (EditText) findViewById(R.id.ucpass);
 		ucpwd = ucpass.getText().toString();
 		
-		submit_button = (Button) findViewById(R.id.signup);
+		Log.e("Name","Name:"+ unm);
+		Log.e("Mail","mail:"+ umail);
+		Log.e("Mob","mob:"+ umob);
+		Log.e("Pwd","pass:"+ ucpwd);
 
+		
+		Toast.makeText(getApplicationContext(), "Sign up your account",Toast.LENGTH_LONG ).show();
+
+		submit_button = (Button)findViewById(R.id.regbtn);
 	
 		submit_button.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				if(unm.length()>1 && umail.length()>1 && umob.length()>1 && upwd.length()>1 && ucpwd.length()>1){			
-					// out of range
-					Log.e("Start AsyncTask","Async Task Started now");
-					MyAsyncTask mm = new MyAsyncTask();		
-					mm.execute();
-				}else{
+								
+/*				if((unm.length()==0) || (umail.length()==0) || (umob.length()==0) || (upwd.length()==0) || (ucpwd.length()==0) ){			
 					Toast.makeText(getApplicationContext(), "please enter something", Toast.LENGTH_LONG).show();
 					Log.e("Async","Async Task Not Started");
-
-				}			
+				}*/
+				//else{		
+				Log.e("Name",unm);
+				Log.e("Mail",umail);
+				Log.e("Mob",umob);
+				Log.e("Pwd",ucpwd);
+					Log.e("Start AsyncTask","Async Task Started now");
+					new MyAsyncTask().execute();
+				//}			
 
 			}
 		});
@@ -95,17 +100,14 @@ public class RegisterPage extends Activity {
 	 
 	/***** Async Task inside Main Class ******/  
 	 
-	public class MyAsyncTask extends AsyncTask<String, String, String>{
+	public class MyAsyncTask extends AsyncTask<String, Integer, String>{
 
-        String response;
+        String resp;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-            //Toast.makeText(getBaseContext(), "REACHED", Toast.LENGTH_LONG);
-
-
+            
             progress = new ProgressDialog(RegisterPage.this);
             progress.setTitle("Processing");
             progress.setMessage("Wait while loading...");
@@ -118,18 +120,23 @@ public class RegisterPage extends Activity {
 		protected String doInBackground(String... args) {
 			// TODO Auto-generated method stub
         	try{
+        			
             	JSONObject mObject = new JSONObject();
-            	mObject.put("Name",uname);
-            	mObject.put("Mail",uemail);
-            	mObject.put("Mob",umobile);
-            	mObject.put("Password",ucpass);
-            	String mString = mObject.toString();
+            	mObject.put("Name",unm);
+            	mObject.put("Mail",umail);
+            	mObject.put("Mob",umob);
+            	mObject.put("Password",ucpwd);
 
-            	HttpRequestWorker mWorker = new HttpRequestWorker();
-            	 response = mWorker.PostRequest("http://192.168.0.2/cafebeside/reg.php", mString, false);
-                
-            	
-            	 return response;
+            	String json_string=mObject.toString();
+				PostMan mSender=new PostMan();
+				resp=mSender.post(json_string,"http://feroseali.in/cafebeside/reg.php");
+				if(resp.contains("Success")){
+					Toast.makeText(getBaseContext(),"Registered Succesfully", Toast.LENGTH_LONG).show();					
+				}
+				else{
+					Toast.makeText(getBaseContext(),"Failed", Toast.LENGTH_LONG).show();
+				}          	
+            	 return resp;
             	
                 }catch(Exception e){
                 	return null;
@@ -140,12 +147,17 @@ public class RegisterPage extends Activity {
 			//pb.setVisibility(View.GONE);
             progress.dismiss();
 			Toast.makeText(getApplicationContext(), "command sent", Toast.LENGTH_LONG).show();
+		    super.onPostExecute(result);
+
 		}
-		protected void onProgressUpdate(Integer... progress){
+		protected void onProgressUpdate(Integer... values){
 			//pb.setProgress(progress[0]);
+		    Log.d("MyAsyncTask","onProgressUpdate");
+		    super.onProgressUpdate(values);
 		}
  
  
 	}	
 	
+
 }

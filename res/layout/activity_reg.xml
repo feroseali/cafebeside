@@ -94,7 +94,7 @@
             android:textColor="#ffffff"
 		    android:padding="15dp"            
             android:text="Sign Me Up"
-            android:id="@+id/signup"
+            android:id="@+id/regbtn"
             android:background="@drawable/regbtn"
 		    android:layout_marginTop="20dp"/>  
 
