@@ -35,7 +35,7 @@ public class LoginPage extends Activity{
 		
 		username = (EditText) findViewById(R.id.etUserName);
 		userpass = (EditText) findViewById(R.id.etPass);
-		
+
 		//Login Button & Action
 		mSignIn	=	(Button) findViewById(R.id.btnSingIn);
 		//final Intent mHome	=	new Intent(this,HomeActivity.class);
@@ -47,20 +47,17 @@ public class LoginPage extends Activity{
 				usermail = username.getText().toString();
 				upassword = userpass.getText().toString();
 				if(!usermail.equals("") && !upassword.equals("")){
+
 					new AttemptLogin().execute();
 				}
 				else{
 					Toast.makeText(getApplicationContext(), "Please enter your login details.",Toast.LENGTH_LONG).show();
 				}
-				/*if(uname.length()<1 && upassword.length()<1){
-					Toast.makeText(getApplicationContext(), "Please enter something first.",Toast.LENGTH_LONG).show();
+
+					//Log.e("","");
+					new AttemptLogin().execute();
 				}
-				else{
-					username.setText("");
-					userpass.setText("");
-					startActivity(mHome);
-				}*/
-			}
+			
 		});
 		
 		//Register Button & Action
@@ -74,6 +71,7 @@ public class LoginPage extends Activity{
 				startActivity(mReg);
 			}
 		});	
+
 	}
 	
 	private void showAlert(String title,String message){
@@ -115,7 +113,7 @@ public class LoginPage extends Activity{
     }
 	
 	
-	
+
 	/*********async task *************/
 	
 	class AttemptLogin extends AsyncTask<String, String, String> {
@@ -147,7 +145,9 @@ public class LoginPage extends Activity{
             	mObject.put("password",userpass);
             	
             	HttpRequestWorker mWorker = new HttpRequestWorker();
-            	 response = mWorker.PostRequest("http://192.168.0.2/cafebeside/login.php", mObject.toString(), false);                            	
+
+            	 response = mWorker.PostRequest("http://192.168.0.2/cafebeside/login.php", mObject.toString(), false);
+   
             	 return response;
             	
                 }catch(Exception e){
@@ -171,6 +171,9 @@ public class LoginPage extends Activity{
         		Intent mBeside = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(mBeside);
         	}else{
+
+        		Intent mBeside = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(mBeside);
         		showAlert("Alert","Invalid UserName or Password");
         	}
         }
