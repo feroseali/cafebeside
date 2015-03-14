@@ -13,6 +13,7 @@ public class SharedPrefSingleton{
 	
 	/*private void SharedPrefSingleton() {
 	}*/
+
 	
 	public static SharedPrefSingleton getInstance(){
 		if(mInstance == null){

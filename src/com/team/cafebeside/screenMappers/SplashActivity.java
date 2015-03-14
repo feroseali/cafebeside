@@ -1,15 +1,15 @@
 package com.team.cafebeside.screenMappers;
 
-import com.team.cafebeside.R;
-import com.team.cafebeside.workers.CafeNetworkValidator;
-import com.team.cafebeside.workers.SharedPrefSingleton;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.team.cafebeside.R;
+import com.team.cafebeside.workers.CafeNetworkValidator;
+import com.team.cafebeside.workers.SharedPrefSingleton;
 
 /**
  * @author Little Adam

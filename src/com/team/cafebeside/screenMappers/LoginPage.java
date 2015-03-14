@@ -5,6 +5,7 @@ import com.team.cafebeside.R;
 import com.team.cafebeside.configs.ServerConnector;
 import com.team.cafebeside.networkEngine.AsyncResponse;
 import com.team.cafebeside.networkEngine.AsyncWorker;
+
 import com.team.cafebeside.workers.SharedPrefSingleton;
 
 import android.app.Activity;
@@ -28,6 +29,7 @@ public class LoginPage extends Activity implements AsyncResponse {
 	private Button mSignUp; // Register Button
 	/*private final String DB_NAME = "ferose_cafebeside.db";
 	private SQLiteDatabase db = null;*/
+
 	private AsyncWorker mAsyncWorker = new AsyncWorker(this);
 
 	@Override
@@ -52,6 +54,7 @@ public class LoginPage extends Activity implements AsyncResponse {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
+
 				try {
 					JSONObject mObject = new JSONObject();
 					mObject.put("username", username.getText().toString());
@@ -62,6 +65,7 @@ public class LoginPage extends Activity implements AsyncResponse {
 				} catch (Exception ex) {
 				
 				}
+
 			}
 
 		});

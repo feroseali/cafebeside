@@ -7,4 +7,5 @@ public class ServerConnector {
     public static String LOGOUT				=	BASE_URL+"/cafebeside/logout.php";
     public static String URI_ITEMS			= 	BASE_URL+"/cafebeside/getSubMenu.php?c_id=";
     public static String GET_CATEGORY_URL	=	BASE_URL+"/cafebeside/getTodaysCategory.php";
+
 }
