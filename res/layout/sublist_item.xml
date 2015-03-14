@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+   <TextView
+        android:id="@+id/food_id"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    
+   <TextView
+            android:id="@+id/food_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:textSize="18sp"
+            android:textColor="#bec636"
+            android:text="@string/app_name"
+            android:layout_alignParentLeft="true" 
+            />
+   <TextView android:id="@+id/food_price_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="@string/rupee" 
+        android:gravity="right"
+        android:paddingLeft="50dp"       
+        android:layout_toRightOf="@+id/food_item"
+        />            
+   <TextView android:id="@+id/food_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="right"
+        android:layout_toRightOf="@+id/food_price_symbol"/>
+            
+    </RelativeLayout>
+
+		<View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#353535" /> 
+
+</LinearLayout>

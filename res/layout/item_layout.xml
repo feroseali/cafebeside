@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/dash_bg">
+	<ImageView 
+   		android:id="@+id/photo"
+   		android:layout_width="match_parent"
+   		android:layout_height="wrap_content"
+   		android:layout_centerHorizontal="true"
+   		android:background="@drawable/table1"/>
+    <TextView
+        android:id="@+id/fd_id"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />	
+	<TextView android:id="@+id/fname"
+		android:textSize="20sp" 
+		android:layout_marginTop="30dp"
+		android:text="Fried Rice"
+		android:textStyle="bold" 
+		android:textColor="#FFFF00" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_below="@id/photo"/>
+	<TextView android:id="@+id/fcategory"
+	    android:text="Category : Meals"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:textColor="#dddddd"
+		android:layout_centerHorizontal="true"
+		android:layout_below="@id/fname" />
+	<TextView android:id="@+id/pricesymbol" 
+	    android:text="@string/rupee"
+		android:textSize="50sp" 
+		android:textColor="#ffffff" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_below="@id/fcategory"
+		android:layout_toLeftOf="@+id/price"		
+		 />
+	<TextView android:id="@+id/price" 
+	    android:text="10"
+	    android:paddingLeft="5dp"
+		android:textSize="50sp" 
+		android:textStyle="bold" 
+		android:textColor="#ffffff" 
+		android:layout_width="wrap_content" 
+        android:layout_centerHorizontal="true"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/fcategory"
+		 />
+
+		<Button
+		    android:id="@+id/btnOrder"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:padding="10dp"
+		    android:textColor="#ffffff"
+		    android:background="@drawable/regbtn"
+		    android:layout_marginTop="3dp"
+			android:layout_below="@id/price"		    
+		    android:text="Order This" />
+				
+</RelativeLayout>

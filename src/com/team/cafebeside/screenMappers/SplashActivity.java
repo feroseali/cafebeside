@@ -2,6 +2,7 @@ package com.team.cafebeside.screenMappers;
 
 import com.team.cafebeside.R;
 import com.team.cafebeside.workers.CafeNetworkValidator;
+import com.team.cafebeside.workers.SharedPrefSingleton;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,10 +30,21 @@ public class SplashActivity extends Activity {
 			// For Splash
 			new Handler().postDelayed(new Runnable() {
 				public void run() {
-					Intent mainIntent = new Intent(SplashActivity.this,
+					SharedPrefSingleton.getInstance().init(getApplicationContext());
+					boolean isLoggedIn=SharedPrefSingleton.getInstance().getLoggedInPreference("isLoggedIn");
+					//Log.e("ISLOGGED",""+isLoggedIn);
+					Intent loginIntent = new Intent(SplashActivity.this,
 							LoginPage.class);
-					SplashActivity.this.startActivity(mainIntent);
-					SplashActivity.this.finish();
+					Intent mainIntent = new Intent(SplashActivity.this,
+							HomeActivity.class);
+					if(isLoggedIn == false){
+						SplashActivity.this.startActivity(loginIntent);
+						SplashActivity.this.finish();
+					}else{
+						SplashActivity.this.startActivity(mainIntent);
+						SplashActivity.this.finish();
+					}
+					
 				}
 			}, delay);
 		}else{

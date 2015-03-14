@@ -157,7 +157,7 @@ public class IntentIntegrator {
 
 	public static final int REQUEST_CODE = 0x0000c0de; // Only use bottom 16
 														// bits
-	private static final String TAG = IntentIntegrator.class.getSimpleName();
+	//private static final String TAG = IntentIntegrator.class.getSimpleName();
 
 	public static final String DEFAULT_TITLE = "Install Barcode Scanner?";
 	public static final String DEFAULT_MESSAGE = "This application requires Barcode Scanner. Would you like to install it?";

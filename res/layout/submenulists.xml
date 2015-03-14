@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" 
+    android:background="@drawable/dash_bg">
+    
+    <TextView
+        android:id="@+id/sublistheader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/menu_header"
+        android:textColor="#ffffff"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <ListView
+        android:id="@android:id/list" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/sublistheader">
+    </ListView>
+    
+</RelativeLayout>

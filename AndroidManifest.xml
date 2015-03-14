@@ -5,12 +5,13 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <!--  Internet Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
+     <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>   
     
 	<application
         android:allowBackup="true"
@@ -29,6 +30,7 @@
         </activity>
         <activity
             android:name=".screenMappers.HomeActivity"
+            android:theme="@android:style/Theme.Holo.Light"
             android:screenOrientation="portrait">
         </activity>
         
@@ -37,22 +39,14 @@
              <action android:name="android.net.wifi.STATE_CHANGE" />
         </intent-filter>
         </receiver>
-        
-
-        <activity
-            android:name=".screenMappers.TodaysMenu"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".screenMappers.MainMenu"
-            android:screenOrientation="portrait">
-        </activity>
         <activity
             android:name=".screenMappers.MyBills"
+            android:theme="@android:style/Theme.Holo.Light"
             android:screenOrientation="portrait">
         </activity> 
         <activity
             android:name=".screenMappers.MyOrders"
+            android:theme="@android:style/Theme.Holo.Light"
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -62,7 +56,22 @@
         <activity
             android:name=".screenMappers.RegisterPage"
             android:screenOrientation="portrait">
-        </activity>                     
+        </activity>    
+        <activity
+            android:name=".screenMappers.SubMenuList"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:screenOrientation="portrait">
+        </activity> 
+        <activity
+            android:name=".screenMappers.MenuList"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:screenOrientation="portrait">
+        </activity> 
+        <activity
+            android:name=".screenMappers.FoodItem"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:screenOrientation="portrait">
+        </activity>                                                
     </application>
 	
 </manifest>

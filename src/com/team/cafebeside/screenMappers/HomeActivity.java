@@ -1,16 +1,14 @@
 package com.team.cafebeside.screenMappers;
 
-import com.team.cafebeside.R;
-import com.team.cafebeside.configs.Configuration;
-import com.team.cafebeside.workers.CafeNetworkValidator;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +23,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.team.cafebeside.R;
+import com.team.cafebeside.configs.Configuration;
+import com.team.cafebeside.workers.CafeNetworkValidator;
+import com.team.cafebeside.workers.SharedPrefSingleton;
 
 
 /**
@@ -90,7 +93,7 @@ public class HomeActivity extends Activity implements OnItemClickListener {
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
     	
         switch(position){
-        case 0:	Intent i1 = new Intent(this, MainMenu.class);
+        case 0:	Intent i1 = new Intent(this, MenuList.class);
         		startActivity(i1);
         		break;
         case 1: Intent i2 = new Intent(this, MyOrders.class);
@@ -99,8 +102,9 @@ public class HomeActivity extends Activity implements OnItemClickListener {
         case 2: Intent i3 = new Intent(this, MyBills.class);
 				startActivity(i3);	
 				break;
-        case 3: Intent i4 = new Intent(this, TodaysMenu.class);
-				startActivity(i4);	
+        case 3: Intent callIntent = new Intent(Intent.ACTION_CALL);
+		        callIntent.setData(Uri.parse("tel:9400017251"));
+		        startActivity(callIntent);	
 				break;		
         }
     }
@@ -197,7 +201,7 @@ public class HomeActivity extends Activity implements OnItemClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.home, menu);
+		getMenuInflater().inflate(R.menu.options_menu, menu);
 		return true;
 	}
 
@@ -207,9 +211,33 @@ public class HomeActivity extends Activity implements OnItemClickListener {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.menu_about) {
+	        Toast.makeText(getApplicationContext(), "You Clicked About Menu!", Toast.LENGTH_LONG).show();
+	        Log.d("Click","Clicked Action Bar Icon");
+			return true;
+		}
+		else if(id== R.id.logout){	
+			Toast.makeText(getApplicationContext(), "You clicked logout button", Toast.LENGTH_LONG).show();
+			mlogout();
+
+
+			
+			
+			
+			
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	public void mlogout(){
+		SharedPrefSingleton shb;
+		shb = SharedPrefSingleton.getInstance();
+		shb.init(getApplicationContext());
+		shb.writePreference("isLoggedIn", false);
+		Intent signinIntent	=	new Intent(this,LoginPage.class);
+		startActivity(signinIntent);
+		finish();
+	}
+	
 }
