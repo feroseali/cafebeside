@@ -2,6 +2,8 @@ package com.team.cafebeside.screenMappers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,17 +14,41 @@ import com.team.cafebeside.R;
 import com.team.cafebeside.workers.SharedPrefSingleton;
 
 public class MyOrders extends Activity {
-	
+	private final String _DB_NAME = "CafeBeside.db";
+	private SQLiteDatabase db = null;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.orders_layout);
+		setContentView(R.layout.checkout);
 		
         Toast.makeText(getApplicationContext(), "Now you can see your orders here!", Toast.LENGTH_LONG).show();
-
+		db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
+        db.setVersion(1);
+        String selectQuery = "SELECT * FROM orders";
+        Cursor c = db.rawQuery(selectQuery,null);
+        Cursor cc=db.rawQuery("Select count(*) from orders;", null);
+        String cnt = cc.getString(0);
+        Log.d("Row Count:",cnt);
+        
+        c.moveToFirst();
+        if (c != null) {
+        do {
+        	Log.d("..................",".............................");
+        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oEmail")));
+        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oDate")));
+        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oFoodid")));
+        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oItmName")));
+        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oCat")));
+        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oQuantity")));
+        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oFprice")));
+        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oInst")));
+        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("sTotal")));
+         } while (c.moveToNext());
+        }
+        c.close();
 	}
 	
 	@Override
@@ -57,6 +83,8 @@ public class MyOrders extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	
+	
 	public void mlogout(){
 		SharedPrefSingleton shb;
 		shb = SharedPrefSingleton.getInstance();
@@ -68,3 +96,8 @@ public class MyOrders extends Activity {
 	}	
 	
 }
+
+
+
+
+

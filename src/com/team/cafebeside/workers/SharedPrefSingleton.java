@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class SharedPrefSingleton{
 	
 	private static SharedPrefSingleton mInstance;
 	private Context mContext;
 	private SharedPreferences myPreference;
-	
+	private SharedPreferences _uPreference;
 	/*private void SharedPrefSingleton() {
 	}*/
 
@@ -25,6 +26,7 @@ public class SharedPrefSingleton{
 	public void init(Context context){
 		mContext	=	context;
 		myPreference=	PreferenceManager.getDefaultSharedPreferences(mContext);
+		_uPreference = PreferenceManager.getDefaultSharedPreferences(mContext);
 	}
 	
 	public void writePreference(String key, boolean value){
@@ -33,8 +35,19 @@ public class SharedPrefSingleton{
 	     mEditor.commit();
 	}
 	
+	public void writeSPreference(String key, String value){
+		Log.d("key in shpreferecne",key);
+		Log.d("value in shpreferecne",value);
+	     Editor sEditor = _uPreference.edit();
+	     sEditor.putString(key, value);
+	     sEditor.commit();
+	}
+	
 	public boolean getLoggedInPreference(String key){
 		return myPreference.getBoolean(key, false);
 	}
 
+	public String getLoggedInUserPreference(String key){
+		return _uPreference.getString(key, null);
+	}
 }

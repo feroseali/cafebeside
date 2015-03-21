@@ -17,10 +17,10 @@ public class MyBills extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.bills_layout);
-		
+		setContentView(R.layout.home);
+
         Toast.makeText(getApplicationContext(), "Now you can see your bills here!", Toast.LENGTH_LONG).show();
-       
+        
 	}
 	
 	@Override

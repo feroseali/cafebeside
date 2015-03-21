@@ -88,6 +88,34 @@ public class HomeActivity extends Activity implements OnItemClickListener {
 	    .setIcon(android.R.drawable.ic_dialog_alert)
 	     .show();
 	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		// super.onBackPressed();
+		new AlertDialog.Builder(this)
+				.setTitle("Alert")
+				.setMessage("Are you sure you want exit ?")
+				.setPositiveButton(android.R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// continue with delete
+								System.exit(0);
+							}
+						})
+				.setNegativeButton(android.R.string.no,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// do nothing
+							}
+						}).setIcon(android.R.drawable.ic_dialog_alert).show();
+
+	}
+	
+	
+	
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {

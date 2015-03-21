@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <ImageView android:id="@+id/imageVdbdiew1" android:contentDescription="dghd" android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/img_cart" android:scaleType="centerCrop" android:layout_centerHorizontal="true" />
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/black_semi_trans_strip" android:padding="10dp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignBottom="@+id/imageVdbdiew1">
+                <LinearLayout android:orientation="vertical" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0">
+                    <TextView android:textSize="16sp" android:textStyle="bold" android:textColor="#ffffff" android:id="@+id/lbl1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chicken Fingers" />
+                    <TextView android:textSize="12sp" android:textColor="#ffffff" android:id="@+id/lbl3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Category Name" />
+                </LinearLayout>
+        <TextView android:id="@+id/pricesymbol" 
+	    android:text="@string/rupee"
+		android:textSize="18sp" 
+		android:textColor="#ffffff" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_toLeftOf="@+id/lbl2"		
+		 />
+                <TextView android:textSize="18sp" android:textColor="#ffffff" android:id="@+id/lbl2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="25" />
+            </LinearLayout>
+        </RelativeLayout>
+        
+        <LinearLayout android:gravity="center_vertical" android:padding="10dp" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="14sp" android:textColor="@color/main_color_gray_dk" android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Quantity" android:layout_weight="1.0" />
+         
+            <Button android:id="@+id/minus" android:scaleType="center" style="?android:attr/buttonStyleSmall"
+                android:background="@drawable/btn_minus" android:layout_width="20dp"
+android:layout_height="20dp"  />
+           
+            <TextView android:textSize="18sp" android:textColor="@color/main_color_gray_dk" android:gravity="center" android:id="@+id/quanity" android:background="@drawable/white_gray_rect" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="3dp" android:layout_marginRight="3dp" android:text="1" />
+           
+            <Button android:id="@+id/plus" android:layout_width="20dp"
+android:layout_height="20dp" android:scaleType="center" style="?android:attr/buttonStyleSmall"
+                android:background="@drawable/btn_plus"  />
+        
+        </LinearLayout>
+        
+        
+        <TextView android:textSize="14sp" android:textColor="@color/white" android:background="@color/main_color_red" android:paddingLeft="10dp" android:paddingTop="5dp" android:paddingRight="10dp" android:paddingBottom="5dp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Additional Options" />
+        <LinearLayout android:orientation="vertical" android:background="@color/gray_cart" android:padding="10dp" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="13sp" android:textStyle="bold" android:textColor="@color/main_color_gray_dk" android:id="@+id/lbl4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Special Instructions" />
+            <EditText android:textSize="14sp" android:id="@+id/spInstructions" android:background="@color/white" android:padding="5dp" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:layout_marginBottom="3dp" android:lines="4" />
+            <TextView android:textSize="12sp" android:textColor="@color/main_color_gray_dk" android:id="@+id/lbl5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Example: extra cheese, side of dressing, etc." />
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:padding="15dp" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:gravity="center" android:id="@+id/btnDone" android:background="@drawable/btn_red_big" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/btn_ordr" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/white" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Order This" android:drawableLeft="@drawable/ic_add_cart" android:drawablePadding="5dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

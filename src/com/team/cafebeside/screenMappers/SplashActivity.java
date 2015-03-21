@@ -33,6 +33,8 @@ public class SplashActivity extends Activity {
 					SharedPrefSingleton.getInstance().init(getApplicationContext());
 					boolean isLoggedIn=SharedPrefSingleton.getInstance().getLoggedInPreference("isLoggedIn");
 					//Log.e("ISLOGGED",""+isLoggedIn);
+					//String loggedinuser = SharedPrefSingleton.getInstance().getLoggedInUserPreference("email");
+					
 					Intent loginIntent = new Intent(SplashActivity.this,
 							LoginPage.class);
 					Intent mainIntent = new Intent(SplashActivity.this,

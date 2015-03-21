@@ -46,6 +46,7 @@ public class LoginPage extends Activity implements AsyncResponse {
 		username = (EditText) findViewById(R.id.etUserName);
 		userpass = (EditText) findViewById(R.id.etPass);
 
+		
 		// Login Button & Action
 		mSignIn = (Button) findViewById(R.id.btnSingIn);
 		// final Intent mHome = new Intent(this,HomeActivity.class);
@@ -54,7 +55,8 @@ public class LoginPage extends Activity implements AsyncResponse {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-
+				usermail = username.getText().toString();
+				Log.d("useremail for shared preference: ", usermail);
 				try {
 					JSONObject mObject = new JSONObject();
 					mObject.put("username", username.getText().toString());
@@ -62,6 +64,7 @@ public class LoginPage extends Activity implements AsyncResponse {
 					mAsyncWorker = new AsyncWorker(arg0.getContext());
 					mAsyncWorker.delegate=LoginPage.this;
 					mAsyncWorker.execute(ServerConnector.LOGIN, mObject.toString());
+					//finish();
 				} catch (Exception ex) {
 				
 				}
@@ -69,7 +72,6 @@ public class LoginPage extends Activity implements AsyncResponse {
 			}
 
 		});
-
 		// Register Button & Action
 		mSignUp = (Button) findViewById(R.id.btnSingUp);
 		mSignUp.setOnClickListener(new OnClickListener() {
@@ -80,6 +82,7 @@ public class LoginPage extends Activity implements AsyncResponse {
 				Intent mReg = new Intent(getApplicationContext(),
 						RegisterPage.class);
 				startActivity(mReg);
+				finish();
 			}
 		});
 
@@ -129,13 +132,19 @@ public class LoginPage extends Activity implements AsyncResponse {
 	public void processFinish(String output) {
 		// TODO Auto-generated method stub
 		Log.e("OnActivity-return", "" + output);
+		Log.d("useremail in response:", usermail);
+
 		if(!output.trim().equals("Success")){
 			showAlert("Alert", "Login Failed");
+			username.setText("");
+			userpass.setText("");
 		}else{
 			SharedPrefSingleton.getInstance().init(getApplicationContext());
 			SharedPrefSingleton.getInstance().writePreference("isLoggedIn", true);
+			SharedPrefSingleton.getInstance().writeSPreference("email", usermail);
 			Intent homeIntent	=	new Intent(this,HomeActivity.class);
 			startActivity(homeIntent);
+			finish();
 		}
 	}
 
