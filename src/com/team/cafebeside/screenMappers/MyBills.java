@@ -1,12 +1,13 @@
 package com.team.cafebeside.screenMappers;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.team.cafebeside.R;
 import com.team.cafebeside.workers.SharedPrefSingleton;
@@ -18,8 +19,7 @@ public class MyBills extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
-
-        Toast.makeText(getApplicationContext(), "Now you can see your bills here!", Toast.LENGTH_LONG).show();
+		getActionBar().setDisplayHomeAsUpEnabled(true);
         
 	}
 	
@@ -37,12 +37,10 @@ public class MyBills extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.menu_about) {
-	        Toast.makeText(getApplicationContext(), "You Clicked About Menu!", Toast.LENGTH_LONG).show();
 	        Log.d("Click","Clicked Action Bar Icon");
 			return true;
 		}
 		else if(id== R.id.logout){	
-			Toast.makeText(getApplicationContext(), "You clicked logout button", Toast.LENGTH_LONG).show();
 			mlogout();
 
 
@@ -64,6 +62,31 @@ public class MyBills extends Activity {
 		startActivity(signinIntent);
 		finish();
 	}	
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		// super.onBackPressed();
+		new AlertDialog.Builder(this)
+				.setTitle("Alert")
+				.setMessage("Are you sure you want exit ?")
+				.setPositiveButton(android.R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// continue with delete
+								System.exit(0);
+							}
+						})
+				.setNegativeButton(android.R.string.no,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// do nothing
+							}
+						}).setIcon(android.R.drawable.ic_dialog_alert).show();
+
+	}
 	
 }
 

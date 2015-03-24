@@ -8,56 +8,52 @@
     <LinearLayout android:gravity="center_vertical" android:background="@color/main_color_gray_dk" android:padding="10dp" android:layout_width="fill_parent" android:layout_height="wrap_content">
         <TextView android:textSize="13sp" android:textColor="@color/white" android:id="@+id/textView1" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Item" android:layout_weight="1.0" />
         <View android:id="@+id/view1" android:background="@color/gray_light" android:layout_width="0.75dip" android:layout_height="fill_parent" />
-        <TextView android:textSize="13sp" android:textColor="@color/white" android:gravity="center" android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:text="Qty" />
-        <View android:id="@+id/view1" android:background="@color/gray_light" android:layout_width="0.75dip" android:layout_height="fill_parent" />
-        <TextView android:textSize="13sp" android:textColor="@color/white" android:gravity="center" android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:text="Price" />
-        <View android:id="@+id/view1" android:background="@color/gray_light" android:layout_width="0.75dip" android:layout_height="fill_parent" />
-        <TextView android:textSize="13sp" android:textColor="@color/white" android:gravity="center" android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:text="Del" />
+        <TextView android:textSize="13sp" android:textColor="@color/white" android:gravity="center" android:id="@+id/textView11" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:text="Qty" />
+        <View android:id="@+id/view2" android:background="@color/gray_light" android:layout_width="0.75dip" android:layout_height="fill_parent" />
+        <TextView android:textSize="13sp" android:textColor="@color/white" android:gravity="center" android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:text="Price" />
+        <View android:id="@+id/view3" android:background="@color/gray_light" android:layout_width="0.75dip" android:layout_height="fill_parent" />
+        <TextView android:textSize="13sp" android:textColor="@color/white" android:gravity="center" android:id="@+id/textView3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:text="Del" />
     </LinearLayout>
-    <LinearLayout android:gravity="center_vertical" android:padding="10dp" android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <TextView android:textSize="14sp" android:textColor="@color/main_color_gray_dk" android:id="@+id/textView1" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Appetizer Combo French  Fries" android:layout_weight="1.0" />
-        <TextView android:textSize="14sp" android:textColor="@color/main_color_gray_dk" android:gravity="center" android:id="@+id/textView1" android:background="@drawable/white_gray_rect" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:text="2" />
-        <TextView android:id="@+id/pricesymbol" 
-	    android:text="@string/rupee"
-		android:textSize="14sp" 
-		android:textColor="@color/main_color_gray_dk" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		android:layout_toLeftOf="@+id/itot"		
-		 />         
-        <TextView android:textSize="14sp" android:textColor="@color/main_color_gray_dk" android:gravity="center" android:id="@+id/itot" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="500.99" />
-        <ImageView android:id="@+id/del" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10dp" android:src="@drawable/ic_del" />
-    </LinearLayout>
-    <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1.0">
-        <View android:id="@+id/view1" android:background="@color/gray_light" android:layout_width="fill_parent" android:layout_height="0.75dip" android:layout_marginBottom="10dp" />
-        <LinearLayout android:gravity="right|center" android:orientation="horizontal" android:paddingRight="20dp" android:layout_width="fill_parent" android:layout_height="wrap_content">
-            <TextView android:textSize="14sp" android:textColor="@color/main_color_gray_dk" android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="10dp" android:text="Subtotal" />
-        <TextView android:id="@+id/pricesymbol" 
-	    android:text="@string/rupee"
-		android:textSize="14sp" 
-		android:textColor="@color/main_color_gray_dk" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		android:layout_toLeftOf="@+id/subto"		
-		 />               
-            <TextView android:textSize="14sp" android:textColor="@color/main_color_gray_dk" android:id="@+id/subto" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="300.99" />
-        </LinearLayout>
-        <LinearLayout android:gravity="right|center" android:orientation="horizontal" android:paddingRight="20dp" android:layout_width="fill_parent" android:layout_height="wrap_content">
-            <TextView android:textSize="14sp" android:textColor="#ff39b54a" android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="10dp" android:text="Discount" />
-        <TextView android:id="@+id/pricesymbol" 
-	    android:text="@string/rupee"
-		android:textSize="14sp" 
-		android:textColor="#ff39b54a" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		android:layout_toLeftOf="@+id/disct"		
-		 />            
-            <TextView android:textSize="14sp" android:textColor="#ff39b54a" android:id="@+id/disct" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="00.00" />
-        </LinearLayout>
+    
+	<ListView
+	    android:id="@+id/olist"
+	    android:layout_width="match_parent"
+	    android:layout_height="218dp"
+	    android:layout_alignParentTop="true"
+	    android:layout_weight="1.0">
 
-        <View android:id="@+id/view1" android:background="@color/gray_light" android:layout_width="fill_parent" android:layout_height="0.75dip" android:layout_marginTop="15dp" android:layout_marginBottom="3dp" />
-        <LinearLayout android:gravity="right|center" android:orientation="horizontal" android:paddingRight="20dp" android:layout_width="fill_parent" android:layout_height="wrap_content">
-            <TextView android:textSize="18sp" android:textStyle="bold" android:textColor="@color/main_color_gray_dk" android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="10dp" android:text="Total" />
+    </ListView>
+
+		    
+			  
+			   
+					    			    			    			    
+			    			    
+    
+
+    
+   
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" >
+
+
+        <View android:id="@+id/view111" android:background="@color/gray_light" android:layout_width="fill_parent" android:layout_height="0.75dip" android:layout_marginTop="15dp" android:layout_marginBottom="3dp" />
+        <LinearLayout android:layout_alignParentBottom="true" android:gravity="right|center" android:orientation="horizontal" android:paddingRight="20dp" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="18sp" android:textStyle="bold" android:textColor="@color/main_color_gray_dk" android:id="@+id/textView100" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="10dp" android:text="Total" />
         <TextView android:id="@+id/pricesymbol" 
 	    android:text="@string/rupee"
 		android:textSize="18sp" 
@@ -69,7 +65,7 @@
             <TextView android:textSize="18sp" android:textStyle="bold" android:textColor="@color/main_color_gray_dk" android:id="@+id/total" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="875.00" />
         </LinearLayout>
     </LinearLayout>
-            <View android:id="@+id/view1" android:background="@color/gray_light" android:layout_width="fill_parent" android:layout_height="0.75dip" android:layout_marginTop="15dp" android:layout_marginBottom="3dp" />
+            <View android:id="@+id/view22" android:background="@color/gray_light" android:layout_width="fill_parent" android:layout_height="0.75dip" android:layout_marginTop="15dp" android:layout_marginBottom="3dp" />
     
     <LinearLayout android:gravity="center" android:background="@drawable/btn_red" 
          android:padding="15dp" android:layout_width="fill_parent" android:layout_height="wrap_content">
@@ -78,7 +74,7 @@
                 android:background="@color/main_color_red" 
                 android:padding="5dp" 
                 android:layout_alignParentLeft="true" 
-                android:id="@+id/btn1" 
+                android:id="@+id/btn_more" 
                 android:textStyle="bold" 
                 android:textColor="@color/white" 
                 android:layout_width="wrap_content" 
@@ -89,7 +85,7 @@
                 android:padding="5dp" 
                 android:layout_alignParentRight="true"                 
                 android:background="@color/main_color_red" 
-                android:id="@+id/btn2" 
+                android:id="@+id/btn_continue" 
                 android:textStyle="bold" 
                 android:textColor="@color/white"  
                 android:layout_width="wrap_content" 

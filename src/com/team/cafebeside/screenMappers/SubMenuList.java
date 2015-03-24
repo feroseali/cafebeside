@@ -6,8 +6,10 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,12 +23,11 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.team.cafebeside.R;
+import com.team.cafebeside.configs.ServerConnector;
 import com.team.cafebeside.networkEngine.ServiceHandlers;
 import com.team.cafebeside.workers.SharedPrefSingleton;
-import com.team.cafebeside.configs.ServerConnector;
 
 public class SubMenuList extends ListActivity {
 	
@@ -45,11 +46,11 @@ public class SubMenuList extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.submenulists);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		Intent i = getIntent();
         // getting attached intent data
         categoryID = i.getStringExtra("TAG_CID");
         // displaying selected product name
-        Toast.makeText(getApplicationContext(), "I selected "+categoryID , Toast.LENGTH_LONG).show();
 		// Call Async task to get the match fixture
         new LoadSubCategories().execute();
         
@@ -180,12 +181,10 @@ public class SubMenuList extends ListActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.menu_about) {
-	        Toast.makeText(getApplicationContext(), "You Clicked About Menu!", Toast.LENGTH_LONG).show();
 	        Log.d("Click","Clicked Action Bar Icon");
 			return true;
 		}
 		else if(id== R.id.logout){	
-			Toast.makeText(getApplicationContext(), "You clicked logout button", Toast.LENGTH_LONG).show();
 			mlogout();
 
 
@@ -206,6 +205,32 @@ public class SubMenuList extends ListActivity {
 		Intent signinIntent	=	new Intent(this,LoginPage.class);
 		startActivity(signinIntent);
 		finish();
+	}
+	
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		// super.onBackPressed();
+		new AlertDialog.Builder(this)
+				.setTitle("Alert")
+				.setMessage("Are you sure you want exit ?")
+				.setPositiveButton(android.R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// continue with delete
+								System.exit(0);
+							}
+						})
+				.setNegativeButton(android.R.string.no,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// do nothing
+							}
+						}).setIcon(android.R.drawable.ic_dialog_alert).show();
+
 	}
 	
 }

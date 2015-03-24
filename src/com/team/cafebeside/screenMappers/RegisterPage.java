@@ -41,8 +41,6 @@ public class RegisterPage extends Activity implements AsyncResponse{
 		upass = (EditText) findViewById(R.id.upass);
 		ucpass = (EditText) findViewById(R.id.ucpass);
 		
-		Toast.makeText(getApplicationContext(), "Sign up your account",Toast.LENGTH_LONG ).show();
-
 		submit_button = (Button)findViewById(R.id.regbtn);
 	
 		submit_button.setOnClickListener(new OnClickListener() {

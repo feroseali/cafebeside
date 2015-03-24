@@ -240,12 +240,10 @@ public class HomeActivity extends Activity implements OnItemClickListener {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.menu_about) {
-	        Toast.makeText(getApplicationContext(), "You Clicked About Menu!", Toast.LENGTH_LONG).show();
 	        Log.d("Click","Clicked Action Bar Icon");
 			return true;
 		}
 		else if(id== R.id.logout){	
-			Toast.makeText(getApplicationContext(), "You clicked logout button", Toast.LENGTH_LONG).show();
 			mlogout();
 
 

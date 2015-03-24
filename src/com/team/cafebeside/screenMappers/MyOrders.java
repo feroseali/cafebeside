@@ -1,54 +1,44 @@
 package com.team.cafebeside.screenMappers;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.team.cafebeside.R;
 import com.team.cafebeside.workers.SharedPrefSingleton;
 
 public class MyOrders extends Activity {
-	private final String _DB_NAME = "CafeBeside.db";
-	private SQLiteDatabase db = null;
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.checkout);
+		setContentView(R.layout.myorders);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-        Toast.makeText(getApplicationContext(), "Now you can see your orders here!", Toast.LENGTH_LONG).show();
-		db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
-        db.setVersion(1);
-        String selectQuery = "SELECT * FROM orders";
-        Cursor c = db.rawQuery(selectQuery,null);
-        Cursor cc=db.rawQuery("Select count(*) from orders;", null);
-        String cnt = cc.getString(0);
-        Log.d("Row Count:",cnt);
-        
-        c.moveToFirst();
-        if (c != null) {
-        do {
-        	Log.d("..................",".............................");
-        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oEmail")));
-        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oDate")));
-        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oFoodid")));
-        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oItmName")));
-        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oCat")));
-        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oQuantity")));
-        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oFprice")));
-        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("oInst")));
-        	Log.d("From SQLITE:",c.getString(c.getColumnIndex("sTotal")));
-         } while (c.moveToNext());
-        }
-        c.close();
+	    ListView allordrlist = (ListView) findViewById(R.id.myallorderlist);
+	    String[] values = new String[] { "Android List View", 
+                "Adapter implementation",
+                "Simple List View In Android",
+                "Create List View Android", 
+                "Android Example", 
+                "List View Source Code", 
+                "List View Array Adapter", 
+                "Android Example List View" 
+               };
+
+ArrayAdapter<String> ladapter = new ArrayAdapter<String>(this,R.layout.allorders,R.id.ordate, values);
+	    
+	    
+	            // Assign adapter to ListView
+	    allordrlist.setAdapter(ladapter); 
 	}
 	
 	@Override
@@ -65,19 +55,12 @@ public class MyOrders extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.menu_about) {
-	        Toast.makeText(getApplicationContext(), "You Clicked About Menu!", Toast.LENGTH_LONG).show();
 	        Log.d("Click","Clicked Action Bar Icon");
 			return true;
 		}
 		else if(id== R.id.logout){	
-			Toast.makeText(getApplicationContext(), "You clicked logout button", Toast.LENGTH_LONG).show();
 			mlogout();
-
-
-			
-			
-			
-			
+		
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -94,6 +77,31 @@ public class MyOrders extends Activity {
 		startActivity(signinIntent);
 		finish();
 	}	
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		// super.onBackPressed();
+		new AlertDialog.Builder(this)
+				.setTitle("Alert")
+				.setMessage("Are you sure you want exit ?")
+				.setPositiveButton(android.R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// continue with delete
+								System.exit(0);
+							}
+						})
+				.setNegativeButton(android.R.string.no,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// do nothing
+							}
+						}).setIcon(android.R.drawable.ic_dialog_alert).show();
+
+	}
 	
 }
 

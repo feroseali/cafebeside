@@ -21,7 +21,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.team.cafebeside.R;
 import com.team.cafebeside.configs.ServerConnector;
@@ -33,8 +32,9 @@ public class FoodItem extends Activity implements AsyncResponse {
 	private Button b_ordr,_decrease,_increase;
 	private TextView fnm,fcat,fprice,_value;
 	private EditText spInst;
-	private static String f_id,f_price,unm,_stringVal,_instructions;
+	public static String f_id,f_price,unm,_stringVal,_instructions;
     private static int _counter = 1;
+    public static String formattedDate;
 	public ProgressDialog progress;
 	private AsyncWorker mAsyncWorker = new AsyncWorker(this);
 	private final String _DB_NAME = "CafeBeside.db";
@@ -46,6 +46,7 @@ public class FoodItem extends Activity implements AsyncResponse {
 		super.onCreate(savedInstanceState);
 		mAsyncWorker.delegate = this;
 		setContentView(R.layout.add_cart);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		SharedPrefSingleton shpref;
 		shpref = SharedPrefSingleton.getInstance();
 		shpref.init(getApplicationContext());
@@ -74,6 +75,7 @@ public class FoodItem extends Activity implements AsyncResponse {
 		fprice = (TextView)findViewById(R.id.lbl2);
 		fprice.setText(f_price);			
 		b_ordr = (Button)findViewById(R.id.btn_ordr); 
+		_stringVal="1";
         _decrease.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -106,12 +108,15 @@ public class FoodItem extends Activity implements AsyncResponse {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				_instructions = spInst.getText().toString();
+				if(_instructions.trim().equals("")){
+					_instructions = "Nothing";
+				}
 				int grandTotal = Integer.parseInt(f_price) * Integer.parseInt(_stringVal);
-				String gtotal = String.valueOf(grandTotal);
+				String stotal = String.valueOf(grandTotal);
 
 				Calendar c = Calendar.getInstance();
 				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-				String formattedDate = df.format(c.getTime());				
+				formattedDate = df.format(c.getTime());				
 				//Toast.makeText(getApplicationContext(),"You Order FoodId: "+ f_id +"\n Your Email: "+ unm +"\n Price: "+f_price, Toast.LENGTH_LONG).show();
 				Log.d("Food Item ID : ",f_id);
 				Log.d("USER EMAIL : ",unm);
@@ -120,7 +125,7 @@ public class FoodItem extends Activity implements AsyncResponse {
 				Log.d("Instructions:",_instructions);
 				Log.d("Category Name",f_cat);
 				Log.d("Food Name:",f_name);
-				Log.d("Grand Total Int:",gtotal);			
+				Log.d("Sub Total Int:",stotal);			
 				Log.d("Todays Date :",formattedDate);
 				
 				ContentValues insertValues = new ContentValues();
@@ -132,10 +137,11 @@ public class FoodItem extends Activity implements AsyncResponse {
 				insertValues.put("oQuantity",_stringVal);
 				insertValues.put("oFprice",f_price);
 				insertValues.put("oInst",_instructions);
-				insertValues.put("sTotal",gtotal);
+				insertValues.put("sTotal",stotal);
 				db.insert("orders", null, insertValues);
+				Log.d("Data Inserted:","SQLITE INSERT Success");
 
-					Intent checkout	=	new Intent(getApplicationContext(),MyOrders.class);
+					Intent checkout	=	new Intent(FoodItem.this,Checkout.class);
 					startActivity(checkout);	
 					finish();
 			}
@@ -145,7 +151,6 @@ public class FoodItem extends Activity implements AsyncResponse {
 		
 
 
-	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -161,13 +166,11 @@ public class FoodItem extends Activity implements AsyncResponse {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.menu_about) {
-	        Toast.makeText(getApplicationContext(), "You Clicked About Menu!", Toast.LENGTH_LONG).show();
 	        Log.d("Click","Clicked Action Bar Icon");
 			return true;
 		}
 		else if(id== R.id.logout){	
-			//Toast.makeText(getApplicationContext(), "You clicked logout button", Toast.LENGTH_LONG).show();
-			//mlogout();
+
 			try{
 				JSONObject mObject = new JSONObject();
 				mObject.put("email", unm);
@@ -238,6 +241,29 @@ public class FoodItem extends Activity implements AsyncResponse {
 		}
 	}	
 	
-	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		// super.onBackPressed();
+		new AlertDialog.Builder(this)
+				.setTitle("Alert")
+				.setMessage("Are you sure you want exit ?")
+				.setPositiveButton(android.R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// continue with delete
+								System.exit(0);
+							}
+						})
+				.setNegativeButton(android.R.string.no,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// do nothing
+							}
+						}).setIcon(android.R.drawable.ic_dialog_alert).show();
+
+	}
 	
 }
