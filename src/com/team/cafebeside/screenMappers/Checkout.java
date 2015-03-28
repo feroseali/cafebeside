@@ -24,6 +24,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.team.cafebeside.R;
 import com.team.cafebeside.workers.SharedPrefSingleton;
 
@@ -61,10 +62,13 @@ public class Checkout extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				try {
-					Intent intent = new Intent(ACTION_SCAN);
+					/*Intent intent = new Intent(ACTION_SCAN);
 					intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-					startActivityForResult(intent, 0);
-				} catch (ActivityNotFoundException anfe) {
+					startActivityForResult(intent, 0);*/
+					final IntentIntegrator mIntegrate = new IntentIntegrator(Checkout.this);
+			        mIntegrate.isScannerExists();
+					
+				} catch (Exception anfe) {
 					showDialog(Checkout.this, "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
 				}
 			}

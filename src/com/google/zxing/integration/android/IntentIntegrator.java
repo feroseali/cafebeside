@@ -283,7 +283,7 @@ public class IntentIntegrator {
 	}
 
 	public AlertDialog isScannerExists() {
-		return isScannerExists(ALL_CODE_TYPES);
+		return showDownloadDialog();
 	}
 
 	/**
