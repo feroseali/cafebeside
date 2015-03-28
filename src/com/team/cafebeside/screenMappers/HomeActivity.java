@@ -44,6 +44,7 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 	private AsyncWorker mAsyncTsk = new AsyncWorker(this);
 	public ProgressDialog progress;
 	private String uemail;
+	
 	static final LauncherIcon[] ICONS = {
         new LauncherIcon(R.drawable.icon_five, "Todays Menu", "icon_five.png"),
         new LauncherIcon(R.drawable.icon_four, "My Orders", "icon_four.png"),
@@ -56,7 +57,6 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		Configuration.IS_APP_RUNNING = true;
-		
 		
 		
 		CafeNetworkValidator validator	=	new CafeNetworkValidator();

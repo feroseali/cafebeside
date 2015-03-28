@@ -47,12 +47,19 @@ public class MyOrders extends Activity {
                 "Android Example List View" 
                };*/
 	    db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
-        db.setVersion(1);
+        db.setVersion(3);
+       // String selectQuery1 = "DELETE FROM orders";
+        //db.execSQL("delete from orders");
+       // db.rawQuery(selectQuery1,null);
         Log.d("User Email :","From Preference: "+usrmail);
         //ArrayAdapter<String> ladapter = new ArrayAdapter<String>(this,R.layout.allorders,R.id.ordate, values);
-		String selectQuery = "SELECT oDate,sTotal FROM orders where oEmail='"+usrmail+"'";
+		String selectQuery = "SELECT oDate,SUM(sTotal) as gTotal FROM orders where oEmail='"+usrmail+"'";
 		
 		Cursor c = db.rawQuery(selectQuery,null);
+	    int cnt = c.getCount();
+	    String cnnt = String.valueOf(cnt);
+	    Log.d("SQLITE TBL ROW COUNT :",cnnt);
+	    if(cnt>0){
         c.moveToFirst();
         if (c != null) {
             do {
@@ -60,7 +67,7 @@ public class MyOrders extends Activity {
             	Log.d("Amount in select","Query :"+c.getString(c.getColumnIndex("sTotal")));
 
             	myoallist.put("Date", c.getString(c.getColumnIndex("oDate")));
-            	myoallist.put("Amount", "Rs."+c.getString(c.getColumnIndex("sTotal")));
+            	myoallist.put("Amount", "Rs."+c.getString(c.getColumnIndex("gTotal")));
             	myallorderLists.add(myoallist);
          	     ListAdapter oadapter = new SimpleAdapter(
                          MyOrders.this, myallorderLists,
@@ -70,7 +77,26 @@ public class MyOrders extends Activity {
             }
             while(c.moveToNext());
         }
-        c.close(); 
+        c.close();
+	    }
+	    else{
+	    	AlertDialog.Builder builder = new AlertDialog.Builder(MyOrders.this);
+			builder.setTitle("CafeBeside Info");
+			builder.setMessage("You didn't make any orders yet!\nOrder something first!!!");
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int which) {
+							Log.e("info", "OK");
+							Intent home_intent = new Intent(getApplicationContext(),HomeActivity.class);
+							startActivity(home_intent);
+							finish();
+						}
+					});
+
+			builder.show();	        
+			c.close();
+	    }
         // Assign adapter to ListView
 	    //allordrlist.setAdapter(ladapter); 
 	}

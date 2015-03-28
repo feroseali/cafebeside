@@ -3,8 +3,11 @@ package com.team.cafebeside.screenMappers;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,25 +28,37 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.team.cafebeside.R;
+import com.team.cafebeside.configs.ServerConnector;
+import com.team.cafebeside.networkEngine.AsyncResponse;
+import com.team.cafebeside.networkEngine.AsyncWorker;
 import com.team.cafebeside.workers.SharedPrefSingleton;
 
-public class Checkout extends Activity {
+public class Checkout extends Activity implements AsyncResponse{
 	private final String _DB_NAME = "CafeBeside.db";
 	private SQLiteDatabase db = null;
 	boolean doubleBackToExitPressedOnce = false;
  	private TextView tv_total=null;
 	static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
     ArrayList<HashMap<String, String>> myorderLists = new ArrayList<HashMap<String, String>>();
+	private AsyncWorker orderAsyncWrkr = new AsyncWorker(this);
+	public ProgressDialog progress;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		orderAsyncWrkr.delegate = this;		
 		setContentView(R.layout.checkout);
 	    HashMap<String, String> myolist = new HashMap<String, String>();
 	    ListView olistView = (ListView) findViewById(R.id.olist);
         Button bmore = (Button) findViewById(R.id.btn_more);
+		db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
+        db.setVersion(3);
+    	final JSONObject orderJObject = new JSONObject();
+
         bmore.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -67,19 +82,45 @@ public class Checkout extends Activity {
 					startActivityForResult(intent, 0);*/
 					final IntentIntegrator mIntegrate = new IntentIntegrator(Checkout.this);
 			        mIntegrate.isScannerExists();
-					
+					IntentResult iRslt = new IntentResult();
+					String qrreslt = iRslt.getContents();
+					Log.d("QR Content","QRCODE "+qrreslt);
+				    
+					String selectallQry = "SELECT oEmail,oDate,oFoodid,oItmName,oCat,oQuantity,oFprice,oInst,sTotal,sum(sTotal) as gtotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
+					Cursor c = db.rawQuery(selectallQry,null);
+					c.moveToFirst();
+			        if (c != null) {
+			        do {
+			        	orderJObject.put("email", c.getString(c.getColumnIndex("oEmail")));
+			        	orderJObject.put("date", c.getString(c.getColumnIndex("oDate")));
+			        	orderJObject.put("foodid", c.getString(c.getColumnIndex("oFoodid")));
+			        	orderJObject.put("price", c.getString(c.getColumnIndex("oFprice")));
+			        	orderJObject.put("tableid", qrreslt);
+			        	orderJObject.put("foodname", c.getString(c.getColumnIndex("oItmName")));
+			        	orderJObject.put("category", c.getString(c.getColumnIndex("oCat")));
+			        	orderJObject.put("quantity", c.getString(c.getColumnIndex("oQuantity")));
+			        	orderJObject.put("sinstructions", c.getString(c.getColumnIndex("oInst")));
+			        	orderJObject.put("subtotal", c.getString(c.getColumnIndex("sTotal")));
+			        	orderJObject.put("grandtotal", c.getInt(c.getColumnIndex("gtotal")));
+	        	
+			         } while (c.moveToNext());
+			        
+			       // tv_total.setText(c.getString(c.getColumnIndex("gtotal")));
+
+			        }
+			        c.close(); 					
+					orderAsyncWrkr = new AsyncWorker(v.getContext());
+					orderAsyncWrkr.delegate=Checkout.this;
+					orderAsyncWrkr.execute(ServerConnector.POST_ORDERINFO, orderJObject.toString());
+
+
 				} catch (Exception anfe) {
 					showDialog(Checkout.this, "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
 				}
 			}
 		});
-		db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
-        db.setVersion(1);
-        //db.execSQL("DELETE FROM orders"); //delete all rows in a table
-		/*Calendar ca = Calendar.getInstance();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		String formDate = df.format(ca.getTime());	*/
-        
+
+              
         Log.d("Format Date:","From Previous :" + FoodItem.formattedDate);
         Log.d("Food ID:","From Previous :" + FoodItem.unm);
 	    tv_total = (TextView) findViewById(R.id.grtotal);
@@ -89,9 +130,10 @@ public class Checkout extends Activity {
        String selectQuery = "SELECT oEmail,oDate,oFoodid,oItmName,oCat,oQuantity,oFprice,oInst,sTotal,sum(sTotal) as gtotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
 
         Cursor c = db.rawQuery(selectQuery,null);
-        /*        String cnt = cc.getString(0);
-        Log.d("Row Count:",cnt);*/
-        
+	    int cnt = c.getCount();
+	    String cnnt = String.valueOf(cnt);
+	    Log.d("SQLITE TBL ROW COUNT :",cnnt);
+	    if(cnt>0){    
         c.moveToFirst();
         if (c != null) {
         do {
@@ -126,7 +168,25 @@ public class Checkout extends Activity {
 
         }
         c.close(); 
-        
+	    }
+	    else{
+	    	AlertDialog.Builder builder = new AlertDialog.Builder(Checkout.this);
+			builder.setTitle("CafeBeside Info");
+			builder.setMessage("You didn't make any orders yet!\nOrder something first!!!");
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int which) {
+							Log.e("info", "OK");
+							Intent home_intent = new Intent(getApplicationContext(),HomeActivity.class);
+							startActivity(home_intent);
+							finish();
+						}
+					});
+
+			builder.show();	        
+			c.close();
+	    }
         
 
         
@@ -158,7 +218,7 @@ public class Checkout extends Activity {
 		return downloadDialog.show();
 	}
 
-	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+/*	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		if (requestCode == 0) {
 			if (resultCode == RESULT_OK) {
 				String contents = intent.getStringExtra("SCAN_RESULT");
@@ -168,7 +228,7 @@ public class Checkout extends Activity {
 
 			}
 		}
-	}
+	}*/
 	
 	
 	@Override
@@ -233,6 +293,41 @@ public class Checkout extends Activity {
 		Intent signinIntent	=	new Intent(this,LoginPage.class);
 		startActivity(signinIntent);
 		finish();
+	}
+
+
+
+
+	@Override
+	public void processFinish(String output) {
+		// TODO Auto-generated method stub
+		if (output.contains("-")) {
+		    // Split it.
+		String[] parts = output.split("-");
+		String part1 = parts[0]; // success			
+		String part2 = parts[1]; // total
+		if(part1.trim().equals("success")){
+			AlertDialog.Builder builder = new AlertDialog.Builder(Checkout.this);
+			builder.setTitle("CafeBeside Info");
+			builder.setMessage("Thank you!,\nYour orders placed successfully!\nPlease wait for a while!\n You have to pay : Rs."+part2);
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int which) {
+							Log.e("info", "OK");
+							Intent home_intent = new Intent(getApplicationContext(),HomeActivity.class);
+							startActivity(home_intent);
+							finish();
+						}
+					});
+
+			builder.show();
+		 }
+		}
+		else{
+			Toast.makeText(getApplicationContext(), "Order placement failed,Try again!", Toast.LENGTH_SHORT).show();	
+
+		}
 	}	
 	
 }

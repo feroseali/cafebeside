@@ -29,11 +29,11 @@ public final class IntentResult {
   private final Integer orientation;
   private final String errorCorrectionLevel;
 
-  IntentResult() {
+  public IntentResult() {
     this(null, null, null, null, null);
   }
 
-  IntentResult(String contents,
+  public IntentResult(String contents,
                String formatName,
                byte[] rawBytes,
                Integer orientation,
