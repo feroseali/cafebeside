@@ -41,7 +41,6 @@ public class Checkout extends Activity implements AsyncResponse{
 	boolean doubleBackToExitPressedOnce = false;
  	private TextView tv_total=null;
 	static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
-    ArrayList<HashMap<String, String>> myorderLists = new ArrayList<HashMap<String, String>>();
 	private AsyncWorker orderAsyncWrkr = new AsyncWorker(this);
 	public ProgressDialog progress;
 
@@ -58,6 +57,7 @@ public class Checkout extends Activity implements AsyncResponse{
 		db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
         db.setVersion(3);
     	final JSONObject orderJObject = new JSONObject();
+        ArrayList<HashMap<String, String>> myorderLists = new ArrayList<HashMap<String, String>>();
 
         bmore.setOnClickListener(new OnClickListener() {
 			
@@ -112,7 +112,7 @@ public class Checkout extends Activity implements AsyncResponse{
 					orderAsyncWrkr = new AsyncWorker(v.getContext());
 					orderAsyncWrkr.delegate=Checkout.this;
 					orderAsyncWrkr.execute(ServerConnector.POST_ORDERINFO, orderJObject.toString());
-
+					Log.d("Json String all orders : ",orderJObject.toString());
 
 				} catch (Exception anfe) {
 					showDialog(Checkout.this, "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
@@ -125,49 +125,63 @@ public class Checkout extends Activity implements AsyncResponse{
         Log.d("Food ID:","From Previous :" + FoodItem.unm);
 	    tv_total = (TextView) findViewById(R.id.grtotal);
 
+	    
+       /* Cursor cc = db.rawQuery("select SUM(sTotal) as gtotal from orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'",null);
+	    
+        int cown = cc.getInt(cc.getColumnIndex("gtotal"));
+	    String connt = String.valueOf(cown);
+	    Log.d("TBL ROW COUNT :",connt);
+	    cc.close();*/
         //String selectQuery = "SELECT *,sum(sTotal) as gtotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
         // String selectQuery = "SELECT * FROM orders where oDate ='"+fit.formattedDate;
-       String selectQuery = "SELECT oEmail,oDate,oFoodid,oItmName,oCat,oQuantity,oFprice,oInst,sTotal,sum(sTotal) as gtotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
+       String selectQuery = "SELECT * ,SUM(sTotal) as gtotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
 
         Cursor c = db.rawQuery(selectQuery,null);
+        int cown = c.getInt(c.getColumnIndex("gtotal"));
+	    String connt = String.valueOf(cown);
+	    Log.d("TBL ROW COUNT :",connt);
+        
 	    int cnt = c.getCount();
 	    String cnnt = String.valueOf(cnt);
 	    Log.d("SQLITE TBL ROW COUNT :",cnnt);
 	    if(cnt>0){    
-        c.moveToFirst();
-        if (c != null) {
-        do {
-        	Log.d("..................",".............................");
-        	Log.d("Frm SQLITE:","Email: "+c.getString(c.getColumnIndex("oEmail")));
-        	Log.d("Frm SQLITE:","Date: "+c.getString(c.getColumnIndex("oDate")));
-        	Log.d("Frm SQLITE:","Fid: "+c.getString(c.getColumnIndex("oFoodid")));
-        	Log.d("Frm SQLITE:","Item: "+c.getString(c.getColumnIndex("oItmName")));
-        	Log.d("Frm SQLITE:","Cat: "+c.getString(c.getColumnIndex("oCat")));
-        	Log.d("Frm SQLITE:","Quantity: "+c.getString(c.getColumnIndex("oQuantity")));
-        	Log.d("Frm SQLITE:","Price: "+c.getString(c.getColumnIndex("oFprice")));
-        	Log.d("Frm SQLITE:","Special: "+c.getString(c.getColumnIndex("oInst")));
-        	Log.d("Frm SQLITE:","STotal: "+c.getString(c.getColumnIndex("sTotal")));
-        	Log.d("Frm SQLITE:","GrandTotal: "+c.getString(c.getColumnIndex("gtotal")));
+		        if (c != null && c.moveToFirst()){
+		        while(c.moveToNext()){
+		        	Log.d("..................",".............................");
+		        	Log.d("Frm SQLITE:","Email: "+c.getString(c.getColumnIndex("oEmail")));
+		        	Log.d("Frm SQLITE:","Date: "+c.getString(c.getColumnIndex("oDate")));
+		        	Log.d("Frm SQLITE:","Fid: "+c.getString(c.getColumnIndex("oFoodid")));
+		        	Log.d("Frm SQLITE:","Item: "+c.getString(c.getColumnIndex("oItmName")));
+		        	Log.d("Frm SQLITE:","Cat: "+c.getString(c.getColumnIndex("oCat")));
+		        	Log.d("Frm SQLITE:","Quantity: "+c.getString(c.getColumnIndex("oQuantity")));
+		        	Log.d("Frm SQLITE:","Price: "+c.getString(c.getColumnIndex("oFprice")));
+		        	Log.d("Frm SQLITE:","Special: "+c.getString(c.getColumnIndex("oInst")));
+		        	Log.d("Frm SQLITE:","STotal: "+c.getString(c.getColumnIndex("sTotal")));
+		        	Log.d("Frm SQLITE:","GrandTotal: "+connt);
+		
+		            myolist.put("Item", c.getString(c.getColumnIndex("oItmName")));
+		            myolist.put("Quantity", c.getString(c.getColumnIndex("oQuantity")));
+		            myolist.put("Price", "Rs."+c.getString(c.getColumnIndex("oFprice")));
+		            myolist.put("Subtotal", "Rs."+c.getString(c.getColumnIndex("sTotal")));
+		            tv_total.setText(connt);
+		            myorderLists.add(myolist);
+		    	    ListAdapter oadapter = new SimpleAdapter(
+		                    Checkout.this, myorderLists,
+		                    R.layout.orderlist, new String[] {"Item","Quantity","Price","Subtotal"}, new int[] {
+		                    R.id.tv3,R.id.tv4,R.id.itot2,R.id.stot});
+		    	    olistView.setAdapter(oadapter);
+		    	    
+		    	    Log.d("Item frm list:",myolist.get("Item"));
+		    	    Log.d("Item frm list:",myolist.get("Quantity"));
+		    	    Log.d("Item frm list:",myolist.get("Price"));
+		    	    Log.d("Item frm list:",myolist.get("Subtotal"));
+		        	
+		         }
+		        
+		       // tv_total.setText(c.getString(c.getColumnIndex("gtotal")));
+		        c.close(); 
 
-            myolist.put("Item", c.getString(c.getColumnIndex("oItmName")));
-            myolist.put("Quantity", c.getString(c.getColumnIndex("oQuantity")));
-            myolist.put("Price", "Rs."+c.getString(c.getColumnIndex("oFprice")));
-            myolist.put("Subtotal", "Rs."+c.getString(c.getColumnIndex("sTotal")));
-            tv_total.setText(c.getString(c.getColumnIndex("gtotal")));
-            myorderLists.add(myolist);
-    	    ListAdapter oadapter = new SimpleAdapter(
-                    Checkout.this, myorderLists,
-                    R.layout.orderlist, new String[] {"Item","Quantity","Price","Subtotal"}, new int[] {
-        R.id.tv3,R.id.tv4,R.id.itot2,R.id.stot});
-    	    olistView.setAdapter(oadapter);
-        	
-        	
-         } while (c.moveToNext());
-        
-       // tv_total.setText(c.getString(c.getColumnIndex("gtotal")));
-
-        }
-        c.close(); 
+		        }
 	    }
 	    else{
 	    	AlertDialog.Builder builder = new AlertDialog.Builder(Checkout.this);

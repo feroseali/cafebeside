@@ -12,14 +12,22 @@
         <View android:id="@+id/view2" android:background="@color/gray_light" android:layout_width="0.75dip" android:layout_height="fill_parent" />
         <TextView android:textSize="13sp" android:textColor="@color/white" android:gravity="center" android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:text="Price" />
         <View android:id="@+id/view3" android:background="@color/gray_light" android:layout_width="0.75dip" android:layout_height="fill_parent" />
-        <TextView android:textSize="13sp" android:textColor="@color/white" android:layout_weight="0.1" android:gravity="center" android:id="@+id/textView3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:text="Sub Total" />
+        <TextView android:textSize="13sp" 
+            android:textColor="@color/white" 
+            android:layout_weight="0.1" 
+            android:gravity="center" 
+            android:id="@+id/textView3" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp" 
+            android:text="Sub Total" />
     </LinearLayout>
     
 	<ListView
 	    android:id="@+id/olist"
 	    android:layout_width="match_parent"
 	    android:layout_height="218dp"
-	    android:layout_alignParentTop="true"
 	    android:layout_weight="1.0">
 
     </ListView>

@@ -44,6 +44,8 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 	private AsyncWorker mAsyncTsk = new AsyncWorker(this);
 	public ProgressDialog progress;
 	private String uemail;
+	//private final String _DB_NAME = "CafeBeside.db";
+	//private SQLiteDatabase db = null;
 	
 	static final LauncherIcon[] ICONS = {
         new LauncherIcon(R.drawable.icon_five, "Todays Menu", "icon_five.png"),
@@ -58,6 +60,11 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 		setContentView(R.layout.activity_home);
 		Configuration.IS_APP_RUNNING = true;
 		
+		//db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
+       // db.setVersion(3);
+      //  String selectQuery = "DELETE FROM orders";
+
+       // db.rawQuery(selectQuery,null);
 		
 		CafeNetworkValidator validator	=	new CafeNetworkValidator();
 		boolean isConnected				=	validator.isConnectedToCafeBeside(this);

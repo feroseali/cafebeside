@@ -64,10 +64,10 @@ public class MyOrders extends Activity {
         if (c != null) {
             do {
             	Log.d("oDate in select","Query :"+c.getString(c.getColumnIndex("oDate")));
-            	Log.d("Amount in select","Query :"+c.getString(c.getColumnIndex("sTotal")));
+            	Log.d("Amount in select","Query :"+c.getInt(c.getColumnIndex("gTotal")));
 
             	myoallist.put("Date", c.getString(c.getColumnIndex("oDate")));
-            	myoallist.put("Amount", "Rs."+c.getString(c.getColumnIndex("gTotal")));
+            	myoallist.put("Amount", "Rs."+c.getInt(c.getColumnIndex("gTotal")));
             	myallorderLists.add(myoallist);
          	     ListAdapter oadapter = new SimpleAdapter(
                          MyOrders.this, myallorderLists,

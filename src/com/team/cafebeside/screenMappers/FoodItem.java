@@ -55,7 +55,8 @@ public class FoodItem extends Activity implements AsyncResponse {
 		db = openOrCreateDatabase(_DB_NAME,SQLiteDatabase.CREATE_IF_NECESSARY, null);
 
         db.setVersion(3);
-		db.execSQL("CREATE TABLE IF NOT EXISTS orders(oEmail VARCHAR(30),oDate VARCHAR(12),oFoodid VARCHAR(6),oItmName VARCHAR(30),oCat VARCHAR(30),oQuantity VARCHAR(6),oFprice VARCHAR(10),oInst VARCHAR(100),sTotal INTEGER,PRIMARY KEY(oFoodid))");
+        //db.execSQL("DROP TABLE IF EXISTS orders");
+		db.execSQL("CREATE TABLE IF NOT EXISTS orders(oEmail VARCHAR(30),oDate VARCHAR(12),oFoodid VARCHAR(6),oItmName VARCHAR(30),oCat VARCHAR(30),oQuantity VARCHAR(6),oFprice VARCHAR(10),oInst VARCHAR(100),sTotal INTEGER)");
 
         
 		_decrease = (Button) findViewById(R.id.minus);
@@ -137,7 +138,7 @@ public class FoodItem extends Activity implements AsyncResponse {
 				insertValues.put("oQuantity",_stringVal);
 				insertValues.put("oFprice",f_price);
 				insertValues.put("oInst",_instructions);
-				insertValues.put("sTotal",grandTotal);
+				insertValues.put("sTotal",stotal);
 				db.insert("orders", null, insertValues);
 				Log.d("Data Inserted:","SQLITE INSERT Success");
 
