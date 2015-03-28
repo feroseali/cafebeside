@@ -12,11 +12,11 @@
             android:paddingBottom="5dp" 
             android:layout_width="fill_parent" 
             android:layout_height="wrap_content" 
-            android:text="My Orders"/>
+            android:gravity="center"
+            android:text="My Orders List"/>
         
     </LinearLayout>
     <LinearLayout android:id="@+id/linearheader" android:gravity="center_vertical" android:background="@color/main_color_gray_dk" android:padding="10dp" android:layout_width="fill_parent" android:layout_height="wrap_content">
-
 
         <TextView
             android:id="@+id/ordrdate"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_weight="0.01"
+            android:layout_weight="1.0"
             android:gravity="center"
             android:text="Order Date"
             android:textColor="@color/white"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_weight="0.02"
+            android:layout_weight="1.0"
             android:gravity="center"
             android:text="Total Price"
             android:textColor="@color/white"

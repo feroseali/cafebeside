@@ -11,15 +11,15 @@
 			        android:layout_width="match_parent" 
 			        android:layout_height="wrap_content">
     				 <TextView 
-			            android:textSize="14sp" 
+			            android:textSize="16sp" 
 			            android:textColor="@color/main_color_gray_dk" 
 			            android:id="@+id/tv3" 
 			            android:layout_width="0.0dip" 
 			            android:layout_height="wrap_content" 
-			            android:text="Appetizer Combo French  Fries" 
+			            android:text="Item Name Here" 
 			            android:layout_weight="1.0" />
 			        <TextView 
-			            android:textSize="14sp" 
+			            android:textSize="16sp" 
 			            android:textColor="@color/main_color_gray_dk" 
 			            android:gravity="center" 
 			            android:id="@+id/tv4" 
@@ -29,362 +29,29 @@
 			            android:layout_marginLeft="5dp" 
 			            android:layout_marginRight="5dp" 
 			            android:text="2" />
+			                 
 			        <TextView 
-			            android:id="@+id/ps1" 
-					    android:text="@string/rupee"
-						android:textSize="14sp" 
-						android:textColor="@color/main_color_gray_dk" 
-						android:layout_width="wrap_content" 
-						android:layout_height="wrap_content"
-						android:layout_toLeftOf="@+id/itot2"/>         
-			        <TextView 
-			            android:textSize="14sp" 
+			            android:textSize="16sp" 
 			            android:textColor="@color/main_color_gray_dk" 
 			            android:gravity="center" 
 			            android:id="@+id/itot2" 
 			            android:layout_width="wrap_content" 
 			            android:layout_height="wrap_content" 
-			            android:text="500.99" />
-			        <ImageView 
-			            android:id="@+id/del2" 
+			            android:text="500" 
+			            android:textStyle="bold"/>
+			       <TextView 
+			            android:textSize="16sp" 
+			            android:textColor="@color/main_color_gray_dk" 
+			            android:gravity="center" 
+			            android:layout_weight="0.1"
+			            android:id="@+id/stot" 
 			            android:layout_width="wrap_content" 
 			            android:layout_height="wrap_content" 
+			            android:text="1500" 
 			            android:layout_marginLeft="10dp" 
-			            android:src="@drawable/ic_del" />
+			            android:textStyle="bold"/>
+
 </LinearLayout>
 
-       
-       
-       
-       <LinearLayout            			
-           android:id="@+id/l2"
-			        android:gravity="center_vertical" 
-			        android:padding="10dp" 
-			        android:layout_width="match_parent" 
-			        android:layout_height="wrap_content">
-    				 <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:id="@+id/tv5" 
-			            android:layout_width="0.0dip" 
-			            android:layout_height="wrap_content" 
-			            android:text="Appetizer Combo French  Fries" 
-			            android:layout_weight="1.0" />
-			        <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:gravity="center" 
-			            android:id="@+id/tv6" 
-			            android:background="@drawable/white_gray_rect" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:layout_marginLeft="5dp" 
-			            android:layout_marginRight="5dp" 
-			            android:text="2" />
-			        <TextView 
-			            android:id="@+id/ps2" 
-					    android:text="@string/rupee"
-						android:textSize="14sp" 
-						android:textColor="@color/main_color_gray_dk" 
-						android:layout_width="wrap_content" 
-						android:layout_height="wrap_content"
-						android:layout_toLeftOf="@+id/itot3"/>         
-			        <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:gravity="center" 
-			            android:id="@+id/itot3" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:text="500.99" />
-			        <ImageView 
-			            android:id="@+id/del3" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:layout_marginLeft="10dp" 
-			            android:src="@drawable/ic_del" />
-</LinearLayout>
-
-       
-       
-       
-       
-       
-       
-       
-       
-       <LinearLayout
-                      android:id="@+id/l3"
-			        android:gravity="center_vertical" 
-			        android:padding="10dp" 
-			        android:layout_width="match_parent" 
-			        android:layout_height="wrap_content">
-    				 <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:id="@+id/tv7" 
-			            android:layout_width="0.0dip" 
-			            android:layout_height="wrap_content" 
-			            android:text="Appetizer Combo French  Fries" 
-			            android:layout_weight="1.0" />
-			        <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:gravity="center" 
-			            android:id="@+id/tv8" 
-			            android:background="@drawable/white_gray_rect" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:layout_marginLeft="5dp" 
-			            android:layout_marginRight="5dp" 
-			            android:text="2" />
-			        <TextView 
-			            android:id="@+id/ps3" 
-					    android:text="@string/rupee"
-						android:textSize="14sp" 
-						android:textColor="@color/main_color_gray_dk" 
-						android:layout_width="wrap_content" 
-						android:layout_height="wrap_content"
-						android:layout_toLeftOf="@+id/itot4"/>         
-			        <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:gravity="center" 
-			            android:id="@+id/itot4" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:text="500.99" />
-			        <ImageView 
-			            android:id="@+id/del4" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:layout_marginLeft="10dp" 
-			            android:src="@drawable/ic_del" />
-</LinearLayout>
-
-       
-       
-       
-       <LinearLayout 
-                      android:id="@+id/l4"
-			        android:gravity="center_vertical" 
-			        android:padding="10dp" 
-			        android:layout_width="match_parent" 
-			        android:layout_height="wrap_content">
-    				 <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:id="@+id/tv9" 
-			            android:layout_width="0.0dip" 
-			            android:layout_height="wrap_content" 
-			            android:text="Appetizer Combo French  Fries" 
-			            android:layout_weight="1.0" />
-			        <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:gravity="center" 
-			            android:id="@+id/tv10" 
-			            android:background="@drawable/white_gray_rect" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:layout_marginLeft="5dp" 
-			            android:layout_marginRight="5dp" 
-			            android:text="2" />
-			        <TextView 
-			            android:id="@+id/ps4" 
-					    android:text="@string/rupee"
-						android:textSize="14sp" 
-						android:textColor="@color/main_color_gray_dk" 
-						android:layout_width="wrap_content" 
-						android:layout_height="wrap_content"
-						android:layout_toLeftOf="@+id/itot5"/>         
-			        <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:gravity="center" 
-			            android:id="@+id/itot5" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:text="500.99" />
-			        <ImageView 
-			            android:id="@+id/del5" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:layout_marginLeft="10dp" 
-			            android:src="@drawable/ic_del" />
-</LinearLayout>
-
-       
-       
-       
-       
-       <LinearLayout 
-                    android:id="@+id/l5"
-			        android:gravity="center_vertical" 
-			        android:padding="10dp" 
-			        android:layout_width="match_parent" 
-			        android:layout_height="wrap_content">
-    				 <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:id="@+id/tv11" 
-			            android:layout_width="0.0dip" 
-			            android:layout_height="wrap_content" 
-			            android:text="Appetizer Combo French  Fries" 
-			            android:layout_weight="1.0" />
-			        <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:gravity="center" 
-			            android:id="@+id/tv12" 
-			            android:background="@drawable/white_gray_rect" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:layout_marginLeft="5dp" 
-			            android:layout_marginRight="5dp" 
-			            android:text="2" />
-			        <TextView 
-			            android:id="@+id/ps5" 
-					    android:text="@string/rupee"
-						android:textSize="14sp" 
-						android:textColor="@color/main_color_gray_dk" 
-						android:layout_width="wrap_content" 
-						android:layout_height="wrap_content"
-						android:layout_toLeftOf="@+id/itot6"/>         
-			        <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:gravity="center" 
-			            android:id="@+id/itot6" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:text="500.99" />
-			        <ImageView 
-			            android:id="@+id/del6" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:layout_marginLeft="10dp" 
-			            android:src="@drawable/ic_del" />
-</LinearLayout>
-
-       
-       
-       
-       
-       
-       <LinearLayout 
-                               android:id="@+id/l6"
-			        android:gravity="center_vertical" 
-			        android:padding="10dp" 
-			        android:layout_width="match_parent" 
-			        android:layout_height="wrap_content">
-    				 <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:id="@+id/tv13" 
-			            android:layout_width="0.0dip" 
-			            android:layout_height="wrap_content" 
-			            android:text="Appetizer Combo French  Fries" 
-			            android:layout_weight="1.0" />
-			        <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:gravity="center" 
-			            android:id="@+id/tv14" 
-			            android:background="@drawable/white_gray_rect" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:layout_marginLeft="5dp" 
-			            android:layout_marginRight="5dp" 
-			            android:text="2" />
-			        <TextView 
-			            android:id="@+id/ps6" 
-					    android:text="@string/rupee"
-						android:textSize="14sp" 
-						android:textColor="@color/main_color_gray_dk" 
-						android:layout_width="wrap_content" 
-						android:layout_height="wrap_content"
-						android:layout_toLeftOf="@+id/itot7"/>         
-			        <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:gravity="center" 
-			            android:id="@+id/itot7" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:text="500.99" />
-			        <ImageView 
-			            android:id="@+id/del7" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:layout_marginLeft="10dp" 
-			            android:src="@drawable/ic_del" />
-</LinearLayout>
-
-       
-       
-       
-       
-       
-       
-       
-       
-       <LinearLayout 
-                               android:id="@+id/l7"
-			        android:gravity="center_vertical" 
-			        android:padding="10dp" 
-			        android:layout_width="match_parent" 
-			        android:layout_height="wrap_content">
-    				 <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:id="@+id/tv15" 
-			            android:layout_width="0.0dip" 
-			            android:layout_height="wrap_content" 
-			            android:text="Appetizer Combo French  Fries" 
-			            android:layout_weight="1.0" />
-			        <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:gravity="center" 
-			            android:id="@+id/tv16" 
-			            android:background="@drawable/white_gray_rect" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:layout_marginLeft="5dp" 
-			            android:layout_marginRight="5dp" 
-			            android:text="2" />
-			        <TextView 
-			            android:id="@+id/ps7" 
-					    android:text="@string/rupee"
-						android:textSize="14sp" 
-						android:textColor="@color/main_color_gray_dk" 
-						android:layout_width="wrap_content" 
-						android:layout_height="wrap_content"
-						android:layout_toLeftOf="@+id/itot8"/>         
-			        <TextView 
-			            android:textSize="14sp" 
-			            android:textColor="@color/main_color_gray_dk" 
-			            android:gravity="center" 
-			            android:id="@+id/itot8" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:text="500.99" />
-			        <ImageView 
-			            android:id="@+id/del8" 
-			            android:layout_width="wrap_content" 
-			            android:layout_height="wrap_content" 
-			            android:layout_marginLeft="10dp" 
-			            android:src="@drawable/ic_del" />
-</LinearLayout>
-
-       
-       
-       
-       
-       
-       
-       
-       
 
 </LinearLayout>

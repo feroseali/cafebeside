@@ -1,8 +1,11 @@
 package com.team.cafebeside.screenMappers;
 
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,6 +29,9 @@ import android.widget.Toast;
 
 import com.team.cafebeside.R;
 import com.team.cafebeside.configs.Configuration;
+import com.team.cafebeside.configs.ServerConnector;
+import com.team.cafebeside.networkEngine.AsyncResponse;
+import com.team.cafebeside.networkEngine.AsyncWorker;
 import com.team.cafebeside.workers.CafeNetworkValidator;
 import com.team.cafebeside.workers.SharedPrefSingleton;
 
@@ -34,8 +40,10 @@ import com.team.cafebeside.workers.SharedPrefSingleton;
  * @author Little Adam
  *
  */
-public class HomeActivity extends Activity implements OnItemClickListener {
-
+public class HomeActivity extends Activity implements OnItemClickListener,AsyncResponse {
+	private AsyncWorker mAsyncTsk = new AsyncWorker(this);
+	public ProgressDialog progress;
+	private String uemail;
 	static final LauncherIcon[] ICONS = {
         new LauncherIcon(R.drawable.icon_five, "Todays Menu", "icon_five.png"),
         new LauncherIcon(R.drawable.icon_four, "My Orders", "icon_four.png"),
@@ -71,6 +79,12 @@ public class HomeActivity extends Activity implements OnItemClickListener {
 				return false;
 			}
 		});
+		
+		
+		SharedPrefSingleton shpref;
+		shpref = SharedPrefSingleton.getInstance();
+		shpref.init(getApplicationContext());
+		uemail = shpref.getLoggedInUserPreference("email");
 
 	}
 
@@ -127,8 +141,17 @@ public class HomeActivity extends Activity implements OnItemClickListener {
         case 1: Intent i2 = new Intent(this, MyOrders.class);
 				startActivity(i2);	
 				break;
-        case 2: Intent i3 = new Intent(this, MyBills.class);
-				startActivity(i3);	
+        case 2: try {
+			    JSONObject mObject = new JSONObject();
+			    mObject.put("email", uemail);
+			    Log.d("JSON BILL INFO :", mObject.toString());
+			    mAsyncTsk = new AsyncWorker(v.getContext());
+			    mAsyncTsk.delegate=HomeActivity.this;
+			    mAsyncTsk.execute(ServerConnector.GET_BILLSTATUS, mObject.toString());
+			    //finish();
+		        } catch (Exception ex) {
+		    	Log.d("Exception","Exception occur "+ex);
+		        }
 				break;
         case 3: Intent callIntent = new Intent(Intent.ACTION_CALL);
 		        callIntent.setData(Uri.parse("tel:9400017251"));
@@ -264,6 +287,43 @@ public class HomeActivity extends Activity implements OnItemClickListener {
 		Intent signinIntent	=	new Intent(this,LoginPage.class);
 		startActivity(signinIntent);
 		finish();
+	}
+
+	@Override
+	public void processFinish(String output) {
+		// TODO Auto-generated method stub
+		try{	
+			if(output.trim().equals("success")){
+				//Toast.makeText(getApplicationContext(), "Payment Successfully Completed!", Toast.LENGTH_SHORT).show();
+        	    Intent i3 = new Intent(this, MyBills.class);
+				startActivity(i3);
+				finish();
+			 }
+			 else{
+				 View bills = View.inflate(this, R.layout.bills_layout, null);
+
+				 AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+					builder.setTitle("CafeBeside Info");
+					//.setMessage("Thank you!,\nYour Payment Successfully Completed!\nBalance in your card :")
+					builder.setView(bills)
+					.setCancelable(false);
+					builder.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int which) {
+									Log.e("info", "OK");
+									//Intent home_intent = new Intent(getApplicationContext(),HomeActivity.class);
+									//startActivity(home_intent);
+									//finish();
+								}
+							});
+
+					builder.show();			
+				}
+		    }
+		    catch(Exception ecc){
+			Log.d("EXception :","In server response "+ ecc);
+		    }
 	}
 	
 }

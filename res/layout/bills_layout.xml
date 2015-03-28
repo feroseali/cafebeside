@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/dash_bg" >
+<LinearLayout 
+    android:gravity="center" 
+    android:orientation="vertical" 
+    android:background="@drawable/home_bg" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bills" />
+
+    
+      <TextView 
+        android:textSize="18sp" 
+        android:textColor="@color/white" 
+        android:id="@+id/textView2" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:text="You don't have any bills to pay!"
+        android:textStyle="bold" 
+        android:layout_marginTop="10dp" />
+      
+        <TextView 
+        android:textSize="18sp" 
+        android:textColor="@color/white" 
+        android:id="@+id/textView4" 
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:text="Are you HUNGRY?" />
+      
+    <TextView 
+        android:textSize="25sp" 
+        android:textColor="@color/white" 
+        android:id="@+id/textView3" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:text="Make Another Order" 
+        android:textStyle="bold" 
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+  
 
 </LinearLayout>

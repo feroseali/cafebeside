@@ -13,12 +13,21 @@
         android:id="@+id/textView1" 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content" 
-        android:text="HUNGRY?"
+        android:text="You will have to pay"
+        android:textStyle="bold" 
         android:layout_marginTop="10dp" />
-
     <TextView 
         android:textSize="25sp" 
+        android:textColor="@color/white" 
+        android:id="@+id/textView2" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:text="Rs.1000" 
         android:textStyle="bold" 
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+    <TextView 
+        android:textSize="18sp" 
         android:textColor="@color/white" 
         android:id="@+id/textViewd" 
         android:layout_width="wrap_content" 
@@ -48,11 +57,12 @@
             android:layout_height="wrap_content" 
             android:hint="Enter card number" 
             android:layout_weight="1.0" 
+            android:singleLine="true"
             android:background="#ffffff"
             android:textSize="18sp"
             android:padding="12dp"
-                    android:gravity="center"
-            
+            android:gravity="center"
+            android:inputType="number"           
             android:layout_gravity="center_horizontal|center">
             <requestFocus />
         </EditText>
@@ -73,14 +83,25 @@
        <Button 
         android:textSize="18sp" 
         android:textColor="@color/white" 
-        android:id="@+id/btn2" 
+        android:id="@+id/btncard" 
         android:background="@drawable/btn_red" 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content" 
         android:textStyle="bold" 
         android:gravity="center"
-        
-        android:text="PAY NOW"/>
+        android:text="PAY BY CARD"/>
+       
+     <Button 
+        android:textSize="18sp" 
+        android:textColor="@color/white" 
+        android:id="@+id/btnhand" 
+        android:background="@drawable/btn_red" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:textStyle="bold" 
+        android:layout_below="@id/btncard"
+        android:gravity="center"
+        android:text="PAY BY HAND"/>
   </RelativeLayout>
 
     

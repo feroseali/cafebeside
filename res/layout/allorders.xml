@@ -2,40 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:id="@+id/alordr"
 			        android:gravity="center_vertical" 
-
+					android:padding="5dp"
 			        android:layout_width="fill_parent" 
 			        android:layout_height="wrap_content">
 
 			        <TextView
 			            android:id="@+id/ordate"
-			            android:layout_width="0.0dip"
+			            android:layout_width="0.01dip"
 			            android:layout_height="wrap_content"
 			            android:layout_marginLeft="5dp"
 			            android:layout_marginRight="5dp"
-			            android:layout_weight="0.12"
+			            android:layout_weight="1.0"
 			            android:gravity="center"
 			            android:text="2015-03-23"
 			            android:textColor="@color/main_color_gray_dk"
-			            android:textSize="14sp" />
-
-			        <TextView 
-			            android:id="@+id/pricesymbol" 
-					    android:text="@string/rupee"
-						android:textSize="14sp" 
-						android:textColor="@color/main_color_gray_dk" 
-						android:layout_width="wrap_content" 
-						android:layout_height="wrap_content"
-						android:layout_toLeftOf="@+id/itot2"/>         
+			            android:textSize="16sp" />
 
 			        <TextView
-			            android:id="@+id/itot2"
+			            android:id="@+id/ortotal"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
-			            android:layout_weight="0.06"
+			            android:layout_weight="1.0"
 			            android:gravity="center"
 			            android:text="1500.99"
 			            android:textColor="@color/main_color_gray_dk"
-			            android:textSize="14sp" />
-
+			            android:textSize="16sp"
+			            android:textStyle="bold" />
 			
 </LinearLayout>

@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.team.cafebeside.R;
@@ -30,6 +31,7 @@ public class Checkout extends Activity {
 	private final String _DB_NAME = "CafeBeside.db";
 	private SQLiteDatabase db = null;
 	boolean doubleBackToExitPressedOnce = false;
+ 	private TextView tv_total=null;
 	static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
     ArrayList<HashMap<String, String>> myorderLists = new ArrayList<HashMap<String, String>>();
 
@@ -40,7 +42,6 @@ public class Checkout extends Activity {
 		setContentView(R.layout.checkout);
 	    HashMap<String, String> myolist = new HashMap<String, String>();
 	    ListView olistView = (ListView) findViewById(R.id.olist);
-		
         Button bmore = (Button) findViewById(R.id.btn_more);
         bmore.setOnClickListener(new OnClickListener() {
 			
@@ -77,6 +78,7 @@ public class Checkout extends Activity {
         
         Log.d("Format Date:","From Previous :" + FoodItem.formattedDate);
         Log.d("Food ID:","From Previous :" + FoodItem.unm);
+	    tv_total = (TextView) findViewById(R.id.grtotal);
 
         //String selectQuery = "SELECT *,sum(sTotal) as gtotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
         // String selectQuery = "SELECT * FROM orders where oDate ='"+fit.formattedDate;
@@ -103,19 +105,23 @@ public class Checkout extends Activity {
 
             myolist.put("Item", c.getString(c.getColumnIndex("oItmName")));
             myolist.put("Quantity", c.getString(c.getColumnIndex("oQuantity")));
-            myolist.put("Price", c.getString(c.getColumnIndex("oFprice")));
+            myolist.put("Price", "Rs."+c.getString(c.getColumnIndex("oFprice")));
+            myolist.put("Subtotal", "Rs."+c.getString(c.getColumnIndex("sTotal")));
+            tv_total.setText(c.getString(c.getColumnIndex("gtotal")));
             myorderLists.add(myolist);
     	    ListAdapter oadapter = new SimpleAdapter(
                     Checkout.this, myorderLists,
-                    R.layout.orderlist, new String[] {"Item","Quantity","Price"}, new int[] {
-        R.id.tv3,R.id.tv4,R.id.itot2});
+                    R.layout.orderlist, new String[] {"Item","Quantity","Price","Subtotal"}, new int[] {
+        R.id.tv3,R.id.tv4,R.id.itot2,R.id.stot});
     	    olistView.setAdapter(oadapter);
         	
         	
          } while (c.moveToNext());
+        
+       // tv_total.setText(c.getString(c.getColumnIndex("gtotal")));
+
         }
         c.close(); 
-        
         
         
 
