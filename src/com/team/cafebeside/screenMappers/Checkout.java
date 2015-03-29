@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -82,7 +83,8 @@ public class Checkout extends Activity implements AsyncResponse{
 					intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 					startActivityForResult(intent, 0);*/
 					final IntentIntegrator mIntegrate = new IntentIntegrator(Checkout.this);
-			        mIntegrate.isScannerExists();
+			        //mIntegrate.isScannerExists();
+			        mIntegrate.initiateScan();
 				} catch (Exception anfe) {
 					showDialog(Checkout.this, "No Scanner Found", "Download a scanner code activity?", "Yes", "No").show();
 				}
@@ -216,19 +218,23 @@ public class Checkout extends Activity implements AsyncResponse{
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-    	JSONObject orderJObject = new JSONObject();
-		if (requestCode == 0) {
+		Log.e("jhubguhguh","uhgougnuygyug");
+		//Toast.makeText(this, "gguguguhguhg + "+requestCode+" "+resultCode, Toast.LENGTH_LONG).show();
+    	
+    	JSONArray jsonArray = new JSONArray();
 			if (resultCode == RESULT_OK) {
 				String contents = intent.getStringExtra("SCAN_RESULT");
 				String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
 
 				Toast.makeText(this, "Content:" + contents + " Format:" + format, Toast.LENGTH_LONG).show();
 				try {	    
-					String selectallQry = "SELECT oEmail,oDate,oFoodid,oItmName,oCat,oQuantity,oFprice,oInst,sTotal,sum(sTotal) as gtotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
+					String selectallQry = "SELECT oEmail,oDate,oFoodid,oItmName,oCat,oQuantity,oFprice,oInst,sTotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
 					Cursor c = db.rawQuery(selectallQry,null);
 					c.moveToFirst();
 			        if (c != null) {
-			        do {
+			        while(c.isAfterLast() == false){
+			        	//Log.e("foodname",c.getString(c.getColumnIndex("oItmName")));
+			        	JSONObject orderJObject = new JSONObject();
 			        	orderJObject.put("email", c.getString(c.getColumnIndex("oEmail")));
 			        	orderJObject.put("date", c.getString(c.getColumnIndex("oDate")));
 			        	orderJObject.put("foodid", c.getString(c.getColumnIndex("oFoodid")));
@@ -239,16 +245,20 @@ public class Checkout extends Activity implements AsyncResponse{
 			        	orderJObject.put("quantity", c.getString(c.getColumnIndex("oQuantity")));
 			        	orderJObject.put("sinstructions", c.getString(c.getColumnIndex("oInst")));
 			        	orderJObject.put("subtotal", c.getString(c.getColumnIndex("sTotal")));
-			        	orderJObject.put("grandtotal", c.getInt(c.getColumnIndex("gtotal")));
-	        	
-			         } while (c.moveToNext());
+			        	//orderJObject.put("grandtotal", c.getInt(c.getColumnIndex("gtotal")));
+			        	jsonArray.put(orderJObject);
+			        	c.moveToNext();
+			         }
 			        
 			       // tv_total.setText(c.getString(c.getColumnIndex("gtotal")));
-			        c.close(); 					
+			        c.close(); 
+			        Log.e("Json String all orders : ",jsonArray.toString());
+			        //Toast.makeText(this, "JSON:" +jsonArray.toString() , Toast.LENGTH_LONG).show();
+
 					orderAsyncWrkr = new AsyncWorker(this);
 					orderAsyncWrkr.delegate=Checkout.this;
-					orderAsyncWrkr.execute(ServerConnector.POST_ORDERINFO, orderJObject.toString());
-					Log.d("Json String all orders : ",orderJObject.toString());
+					orderAsyncWrkr.execute(ServerConnector.POST_ORDERINFO, jsonArray.toString());
+					Log.d("Json String all orders : ",jsonArray.toString());
 			        }
 
 				} catch (Exception anfe) {
@@ -256,7 +266,7 @@ public class Checkout extends Activity implements AsyncResponse{
 				}
 			}
 		}
-	}
+	
 	
 	
 	@Override
