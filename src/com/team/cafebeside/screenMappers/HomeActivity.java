@@ -45,9 +45,6 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 	private AsyncWorker mAsyncTsk = new AsyncWorker(this);
 	public ProgressDialog progress;
 	private String uemail;
-/*	private final String _DB_NAME = "CafeBeside.db";
-	private SQLiteDatabase db = null;*/
-	public static int tAmnt=0; 
 
 	static final LauncherIcon[] ICONS = {
         new LauncherIcon(R.drawable.icon_five, "Todays Menu", "icon_five.png"),
@@ -165,7 +162,7 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 		        }
 				break;
         case 3: Intent callIntent = new Intent(Intent.ACTION_CALL);
-		        callIntent.setData(Uri.parse("tel:9400017251"));
+		        callIntent.setData(Uri.parse("tel:9946673404"));
 		        startActivity(callIntent);	
 				break;		
         }
@@ -304,9 +301,14 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 	public void processFinish(String output) {
 		// TODO Auto-generated method stub
 		try{	
-			if(output.trim().equals("success")){
-				//Toast.makeText(getApplicationContext(), "Payment Successfully Completed!", Toast.LENGTH_SHORT).show();
+			if (output.contains("-")) {
+			    // Split it.
+			String[] parts = output.split("-");
+			String part1 = parts[0]; // success			
+			String part2 = parts[1]; // balance			
         	    Intent i3 = new Intent(this, MyBills.class);
+        	    i3.putExtra("OrderDate", part1);
+        	    i3.putExtra("TotalAmount", part2);
 				startActivity(i3);
 				finish();
 			 }
@@ -331,7 +333,8 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 
 					builder.show();			
 				}
-		    }
+		    
+			}
 		    catch(Exception ecc){
 			Log.d("EXception :","In server response "+ ecc);
 		    }

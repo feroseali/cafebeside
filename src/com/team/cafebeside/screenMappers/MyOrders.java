@@ -3,12 +3,15 @@ package com.team.cafebeside.screenMappers;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,13 +19,23 @@ import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
 import com.team.cafebeside.R;
+import com.team.cafebeside.configs.ServerConnector;
+import com.team.cafebeside.networkEngine.ServiceHandlers;
 import com.team.cafebeside.workers.SharedPrefSingleton;
 
-public class MyOrders extends Activity {
-	private final String _DB_NAME = "CafeBeside.db";
-	private SQLiteDatabase db = null;
+public class MyOrders extends Activity{
+    private ProgressDialog pDialog;
+    private static String usrmail;
+	private static final String TAG_ORDERS = "orders";
+	private static final String TAG_DATE = "date";
+	private static final String TAG_AMOUNT = "price";
+    private static ListView allordrlist;
+/*	private final String _DB_NAME = "CafeBeside.db";
+	private SQLiteDatabase db = null;*/
     ArrayList<HashMap<String, String>> myallorderLists = new ArrayList<HashMap<String, String>>();
+	JSONArray orlist = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,54 +46,15 @@ public class MyOrders extends Activity {
 		SharedPrefSingleton shpref;
 		shpref = SharedPrefSingleton.getInstance();
 		shpref.init(getApplicationContext());
-		String usrmail = shpref.getLoggedInUserPreference("email");
-	    HashMap<String, String> myoallist = new HashMap<String, String>();
-	    ListView allordrlist = (ListView) findViewById(R.id.myallorderlist);
-	   /* String[] values = new String[] { "Android List View", 
-                "Adapter implementation",
-                "Simple List View In Android",
-                "Create List View Android", 
-                "Android Example", 
-                "List View Source Code", 
-                "List View Array Adapter", 
-                "Android Example List View" 
-               };*/
-	    db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
-        db.setVersion(3);
-        //String selectQuery1 = "DELETE FROM orders";
-        //db.execSQL("delete from orders");
-       // db.rawQuery(selectQuery1,null);
-        Log.d("User Email :","From Preference: "+usrmail);
-        //ArrayAdapter<String> ladapter = new ArrayAdapter<String>(this,R.layout.allorders,R.id.ordate, values);
-		String selectQuery = "SELECT oDate,SUM(sTotal) as gTotal FROM orders where oEmail='"+usrmail+"'";
-		
-		Cursor c = db.rawQuery(selectQuery,null);
+		usrmail = shpref.getLoggedInUserPreference("email");
+	    allordrlist = (ListView) findViewById(R.id.myallorderlist);
+        new LoadAllOrders().execute();
 
-	    int cnt = c.getCount();
-	    //String cnnt = String.valueOf(cnt);
-	    //Log.d("SQLITE TBL ROW COUNT :",cnnt);
-	    if(cnt>0){
-        c.moveToFirst();
-        if (c != null && !c.isAfterLast()) {
-            do {
-            	Log.d("oDate in select","Query :"+c.getString(c.getColumnIndex("oDate")));
-            	Log.d("Amount in select","Query :"+c.getInt(c.getColumnIndex("gTotal")));
+/*	    db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
+        db.setVersion(3);*/
 
-            	myoallist.put("Date", c.getString(c.getColumnIndex("oDate")));
-            	myoallist.put("Amount", "Rs."+c.getInt(c.getColumnIndex("gTotal")));
-            	myallorderLists.add(myoallist);
-         	     ListAdapter oadapter = new SimpleAdapter(
-                         MyOrders.this, myallorderLists,
-                         R.layout.allorders, new String[] {"Date","Amount"}, new int[] {
-                         R.id.ordate,R.id.ortotal});
-         	    allordrlist.setAdapter(oadapter);
-            }
-            while(c.moveToNext());
-        }
-        c.close();
-	    }
-	    else{
-	    	AlertDialog.Builder builder = new AlertDialog.Builder(MyOrders.this);
+
+	    	/*AlertDialog.Builder builder = new AlertDialog.Builder(MyOrders.this);
 			builder.setTitle("CafeBeside Info");
 			builder.setMessage("You didn't make any orders yet!\nOrder something first!!!");
 			builder.setPositiveButton("OK",
@@ -94,13 +68,91 @@ public class MyOrders extends Activity {
 						}
 					});
 
-			builder.show();	        
-			c.close();
-	    }
-
-        // Assign adapter to ListView
-	    //allordrlist.setAdapter(ladapter); 
+			builder.show();	     */   
+	
 	}
+	
+	
+	
+	private class LoadAllOrders extends AsyncTask<Void, Void, Void> {
+		/**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(MyOrders.this);
+            pDialog.setMessage("Loading My Orders. Please wait...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+        
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			// TODO Auto-generated method stub
+			ServiceHandlers serviceClient = new ServiceHandlers(); 
+            Log.d("url: ", "> " + ServerConnector.GET_ORDERSTATUS);
+			String json = serviceClient.makeServiceCall(ServerConnector.GET_ORDERSTATUS+usrmail,ServiceHandlers.GET);
+            Log.d("Get Category response: ", "> " + json);
+			if (json != null) {
+				try{
+                    Log.d("try", "in the try");
+		            JSONObject jsonObj = new JSONObject(json);
+		            Log.d("jsonObject", "new json Object");
+		            orlist = jsonObj.getJSONArray(TAG_ORDERS);
+                    Log.d("json aray", "user point array" + orlist);
+					int len = orlist.length();
+                    Log.d("len", "get array length"+ len);
+						for (int i = 0; i < len; i++) {
+						    JSONObject c = orlist.getJSONObject(i);
+						    Log.d("JSONObject", "jsonObject created "+c);
+						    String idate = c.getString(TAG_DATE);
+						    Log.d("iDate ", idate);
+						    String oamount = c.getString(TAG_AMOUNT);
+						    Log.d("Amount in List ", oamount);
+
+						    
+						    HashMap<String, String> myoallist = new HashMap<String, String>();
+
+			            	myoallist.put("Date",idate);
+			            	myoallist.put("Amount", "Rs."+oamount);  
+			            	myallorderLists.add(myoallist);
+
+						}
+
+				}
+				catch(Exception e){
+	                Log.d("catch", "in the catch");
+	                e.printStackTrace();
+				}
+			}
+			else{
+                Log.e("JSON Data", "Didn't receive any data from server!");
+			}
+			
+			return null;
+		}
+		
+		 @Override
+         protected void onPostExecute(Void result) {
+         super.onPostExecute(result);
+         pDialog.dismiss();        
+         ListAdapter oadapter = new SimpleAdapter(
+                 MyOrders.this, myallorderLists,
+                 R.layout.allorders, new String[] {"Date","Amount"}, new int[] {
+                 R.id.ordate,R.id.ortotal});
+ 	    allordrlist.setAdapter(oadapter);
+ 	            
+     }
+		 
+		 
+	}
+	
+	
+	
+	
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -163,6 +215,7 @@ public class MyOrders extends Activity {
 						}).setIcon(android.R.drawable.ic_dialog_alert).show();
 
 	}
+
 	
 }
 

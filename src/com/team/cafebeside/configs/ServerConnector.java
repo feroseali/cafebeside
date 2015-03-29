@@ -10,5 +10,6 @@ public class ServerConnector {
     public static String POST_CARDINFO		=	BASE_URL+"/cafebeside/postCardinfo.php";
     public static String POST_ORDERINFO		=	BASE_URL+"/cafebeside/postOrders.php";
     public static String GET_BILLSTATUS		=	BASE_URL+"/cafebeside/getBillStatus.php";
+    public static String GET_ORDERSTATUS	=	BASE_URL+"/cafebeside/getOrderStatus.php?email=";
 
 }

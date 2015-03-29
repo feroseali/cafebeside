@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,9 +30,10 @@ public class MyBills extends Activity implements AsyncResponse {
 	private String cnum,umail;
 	private AsyncWorker mAsync = new AsyncWorker(this);
 	public ProgressDialog progress;
+	public static String OrdDate;
 	public static String TotlAmnt;
-	/*private final String _DB_NAME = "CafeBeside.db";
-	private SQLiteDatabase db = null;*/
+	private final String _DB_NAME = "CafeBeside.db";
+	private SQLiteDatabase db = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,18 +49,26 @@ public class MyBills extends Activity implements AsyncResponse {
 		shpref.init(getApplicationContext());
 		umail = shpref.getLoggedInUserPreference("email");
 		
-		/*db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
+		db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
         db.setVersion(3);
-
-	    String selectQuery = "SELECT sum(sTotal) as gtotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
-        Cursor c = db.rawQuery(selectQuery,null);
-        c.moveToFirst();*/
-        //final String Amnt = String.valueOf(c.getInt(c.getColumnIndex("gtotal")));
-        //c.close();
-		TotlAmnt = String.valueOf(HomeActivity.tAmnt);
-        Log.d("Amount : ",TotlAmnt);
+/*
+		String selectQuery = "SELECT SUM(sTotal) as gTotal FROM orders where oEmail='"+umail+"'";		
+		Cursor c2 = db.rawQuery(selectQuery,null);
+		c2.moveToFirst();
+		int count = c2.getInt(c2.getColumnIndex("gTotal"));
+		
+		c2.close();*/
+		
+		Intent iMyBills = getIntent();
+		String count = iMyBills.getStringExtra("TotalAmount");
+		OrdDate = iMyBills.getStringExtra("OrderDate");
+		Log.d("Amount : ",""+count);
         TextView mTotal = (TextView) findViewById(R.id.myTotal);
-        mTotal.setText("Rs."+TotlAmnt);
+        mTotal.setText("Rs."+count);
+        TotlAmnt = count;
+        Log.d("TotlAmnt: ",""+TotlAmnt);
+        
+        Log.d("Date json : ", OrdDate);
         bhand.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -97,7 +107,7 @@ public class MyBills extends Activity implements AsyncResponse {
 
 				        JSONObject mObject = new JSONObject();
 						mObject.put("email", umail);
-						mObject.put("odate", FoodItem.formattedDate);
+						mObject.put("odate", OrdDate);
 						mObject.put("cardnumber", cnum);
 						mObject.put("amount", TotlAmnt);
 						Log.d("JSON CARD INFO :", mObject.toString());
@@ -211,6 +221,11 @@ public class MyBills extends Activity implements AsyncResponse {
 						});
 
 				builder.show();
+				
+				
+				db.execSQL("Delete From orders");
+				
+				
 			 }
 			}
 			else if(output.trim().equals("loggedout")){

@@ -45,6 +45,7 @@ public class Checkout extends Activity implements AsyncResponse{
 	static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
 	private AsyncWorker orderAsyncWrkr = new AsyncWorker(this);
 	public ProgressDialog progress;
+	public int tamnt=0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +53,11 @@ public class Checkout extends Activity implements AsyncResponse{
 		super.onCreate(savedInstanceState);
 		orderAsyncWrkr.delegate = this;		
 		setContentView(R.layout.checkout);
-	    //HashMap<String, String> myolist = new HashMap<String, String>();
 	    ListView olistView = (ListView) findViewById(R.id.olist);
 	    tv_total = (TextView) findViewById(R.id.grtotal);
         Button bmore = (Button) findViewById(R.id.btn_more);
 		db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
         db.setVersion(3);
-        //ArrayList<HashMap<String, String>> myorderLists = new ArrayList<HashMap<String, String>>();
         List<HashMap<String, String>> myorderLists = new ArrayList<HashMap<String, String>>();
 
         bmore.setOnClickListener(new OnClickListener() {
@@ -79,9 +78,6 @@ public class Checkout extends Activity implements AsyncResponse{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				try {
-					/*Intent intent = new Intent(ACTION_SCAN);
-					intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-					startActivityForResult(intent, 0);*/
 					final IntentIntegrator mIntegrate = new IntentIntegrator(Checkout.this);
 			        //mIntegrate.isScannerExists();
 			        mIntegrate.initiateScan();
@@ -96,20 +92,10 @@ public class Checkout extends Activity implements AsyncResponse{
         Log.d("Food ID:","From Previous :" + FoodItem.unm);
 
 	    
-        /* Cursor cc = db.rawQuery("select SUM(sTotal) as gtotal from orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'",null);
-	    cc.moveToFirst();
-        int cownt = cc.getInt(cc.getColumnIndex("gtotal"));
-	    String cownnt = String.valueOf(cownt);
-	    Log.d("TBL ROW COUNT :",cownnt);
-	    cc.close(); */
-        //String selectQuery = "SELECT *,sum(sTotal) as gtotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
-        // String selectQuery = "SELECT * FROM orders where oDate ='"+fit.formattedDate;
+
        String selectQuery = "SELECT * FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
 
         Cursor c = db.rawQuery(selectQuery,null);
- /*       int cown = c.getInt(c.getColumnIndex("gtotal"));
-	    String connt = String.valueOf(cown);
-	    Log.d("TBL ROW COUNT :",connt);*/
         
         String[] from = new String[] {"Item","Quantity","Price","Subtotal"};
         int[] to = new int[] { R.id.tv3,R.id.tv4,R.id.itot2,R.id.stot };
@@ -132,39 +118,23 @@ public class Checkout extends Activity implements AsyncResponse{
 		        	Log.d("Frm SQLITE:","Price: "+c.getString(c.getColumnIndex("oFprice")));
 		        	Log.d("Frm SQLITE:","Special: "+c.getString(c.getColumnIndex("oInst")));
 		        	Log.d("Frm SQLITE:","STotal: "+c.getString(c.getColumnIndex("sTotal")));
-		        	//Log.d("Frm SQLITE:","GrandTotal: "+c.getInt(c.getColumnIndex("gtotal")));
 		        	
 		                HashMap<String, String> map = new HashMap<String, String>();
 		                map.put("Item", c.getString(c.getColumnIndex("oItmName")));
 		                map.put("Quantity", c.getString(c.getColumnIndex("oQuantity")));
 		                map.put("Price", "Rs."+c.getString(c.getColumnIndex("oFprice")));
 		                map.put("Subtotal", "Rs."+c.getString(c.getColumnIndex("sTotal")));
-		                int amt = HomeActivity.tAmnt;
-		                HomeActivity.tAmnt =amt + Integer.parseInt(c.getString(c.getColumnIndex("sTotal")));
+			            tamnt =tamnt + Integer.parseInt(c.getString(c.getColumnIndex("sTotal")));
 		                myorderLists.add(map);
-		            
-		        	
-		           /* myolist.put("Item", c.getString(c.getColumnIndex("oItmName")));
-		            myolist.put("Quantity", c.getString(c.getColumnIndex("oQuantity")));
-		            myolist.put("Price", "Rs."+c.getString(c.getColumnIndex("oFprice")));
-		            myolist.put("Subtotal", "Rs."+c.getString(c.getColumnIndex("sTotal")));*/
-		            //tv_total.setText(connt);
-		          //  myorderLists.add(myolist);
-		    	   /* oadapter = new SimpleAdapter(
-		                    Checkout.this, myorderLists,
-		                    R.layout.orderlist, new String[] {"Item","Quantity","Price","Subtotal"}, new int[] {
-		                    R.id.tv3,R.id.tv4,R.id.itot2,R.id.stot});
-		    	    olistView.setAdapter(oadapter);*/
-		    	    
+	    	    
 		    	    c.moveToNext();
 
 		         }
-		       // tv_total.setText(c.getString(c.getColumnIndex("gtotal")));
 		        
 		        SimpleAdapter adapter = new SimpleAdapter(this, myorderLists, R.layout.orderlist, from, to);
 	    	    olistView.setAdapter(adapter);
 		        c.close(); 
-	            tv_total.setText(String.valueOf(HomeActivity.tAmnt));
+	            tv_total.setText(""+tamnt);
 
 		        }
 	    }
@@ -217,23 +187,20 @@ public class Checkout extends Activity implements AsyncResponse{
 		return downloadDialog.show();
 	}
 
-	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		Log.e("jhubguhguh","uhgougnuygyug");
-		//Toast.makeText(this, "gguguguhguhg + "+requestCode+" "+resultCode, Toast.LENGTH_LONG).show();
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) { 	
     	
-    	JSONArray jsonArray = new JSONArray();
+		JSONArray jsonArray = new JSONArray();
 			if (resultCode == RESULT_OK) {
 				String contents = intent.getStringExtra("SCAN_RESULT");
 				String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
 
-				Toast.makeText(this, "Content:" + contents + " Format:" + format, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Content:" + contents + " Format:" + format, Toast.LENGTH_SHORT).show();
 				try {	    
 					String selectallQry = "SELECT oEmail,oDate,oFoodid,oItmName,oCat,oQuantity,oFprice,oInst,sTotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
 					Cursor c = db.rawQuery(selectallQry,null);
 					c.moveToFirst();
 			        if (c != null) {
 			        while(c.isAfterLast() == false){
-			        	//Log.e("foodname",c.getString(c.getColumnIndex("oItmName")));
 			        	JSONObject orderJObject = new JSONObject();
 			        	orderJObject.put("email", c.getString(c.getColumnIndex("oEmail")));
 			        	orderJObject.put("date", c.getString(c.getColumnIndex("oDate")));
@@ -245,16 +212,12 @@ public class Checkout extends Activity implements AsyncResponse{
 			        	orderJObject.put("quantity", c.getString(c.getColumnIndex("oQuantity")));
 			        	orderJObject.put("sinstructions", c.getString(c.getColumnIndex("oInst")));
 			        	orderJObject.put("subtotal", c.getString(c.getColumnIndex("sTotal")));
-			        	//orderJObject.put("grandtotal", c.getInt(c.getColumnIndex("gtotal")));
 			        	jsonArray.put(orderJObject);
 			        	c.moveToNext();
 			         }
 			        
-			       // tv_total.setText(c.getString(c.getColumnIndex("gtotal")));
 			        c.close(); 
 			        Log.e("Json String all orders : ",jsonArray.toString());
-			        //Toast.makeText(this, "JSON:" +jsonArray.toString() , Toast.LENGTH_LONG).show();
-
 					orderAsyncWrkr = new AsyncWorker(this);
 					orderAsyncWrkr.delegate=Checkout.this;
 					orderAsyncWrkr.execute(ServerConnector.POST_ORDERINFO, jsonArray.toString());
@@ -340,7 +303,6 @@ public class Checkout extends Activity implements AsyncResponse{
 	public void processFinish(String output) {
 		// TODO Auto-generated method stub
 		if (output.contains("-")) {
-		    // Split it.
 		String[] parts = output.split("-");
 		String part1 = parts[0]; // success			
 		String part2 = parts[1]; // total
