@@ -29,6 +29,9 @@ public class MyBills extends Activity implements AsyncResponse {
 	private String cnum,umail;
 	private AsyncWorker mAsync = new AsyncWorker(this);
 	public ProgressDialog progress;
+	public static String TotlAmnt;
+	/*private final String _DB_NAME = "CafeBeside.db";
+	private SQLiteDatabase db = null;*/
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +46,19 @@ public class MyBills extends Activity implements AsyncResponse {
 		shpref = SharedPrefSingleton.getInstance();
 		shpref.init(getApplicationContext());
 		umail = shpref.getLoggedInUserPreference("email");
-        /*String total = "1000";
-        if(!total.equals("")){
-        	
-        }*/
-        
+		
+		/*db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
+        db.setVersion(3);
+
+	    String selectQuery = "SELECT sum(sTotal) as gtotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
+        Cursor c = db.rawQuery(selectQuery,null);
+        c.moveToFirst();*/
+        //final String Amnt = String.valueOf(c.getInt(c.getColumnIndex("gtotal")));
+        //c.close();
+		TotlAmnt = String.valueOf(HomeActivity.tAmnt);
+        Log.d("Amount : ",TotlAmnt);
+        TextView mTotal = (TextView) findViewById(R.id.myTotal);
+        mTotal.setText("Rs."+TotlAmnt);
         bhand.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -83,15 +94,17 @@ public class MyBills extends Activity implements AsyncResponse {
 				}
 				else{
 					try {
-						JSONObject mObject = new JSONObject();
+
+				        JSONObject mObject = new JSONObject();
 						mObject.put("email", umail);
-						mObject.put("odate", "2015-03-27");
+						mObject.put("odate", FoodItem.formattedDate);
 						mObject.put("cardnumber", cnum);
-						mObject.put("amount", "100");
+						mObject.put("amount", TotlAmnt);
 						Log.d("JSON CARD INFO :", mObject.toString());
 						mAsync = new AsyncWorker(v.getContext());
 						mAsync.delegate=MyBills.this;
 						mAsync.execute(ServerConnector.POST_CARDINFO, mObject.toString());
+						Log.d("Card Json : ",mObject.toString());
 						//finish();
 					} catch (Exception ex) {
 						Log.d("Exception","Exception occur "+ex);

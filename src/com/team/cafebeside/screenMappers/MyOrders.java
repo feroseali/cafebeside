@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-
 import com.team.cafebeside.R;
 import com.team.cafebeside.workers.SharedPrefSingleton;
 
@@ -48,7 +47,7 @@ public class MyOrders extends Activity {
                };*/
 	    db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
         db.setVersion(3);
-       // String selectQuery1 = "DELETE FROM orders";
+        //String selectQuery1 = "DELETE FROM orders";
         //db.execSQL("delete from orders");
        // db.rawQuery(selectQuery1,null);
         Log.d("User Email :","From Preference: "+usrmail);
@@ -56,12 +55,13 @@ public class MyOrders extends Activity {
 		String selectQuery = "SELECT oDate,SUM(sTotal) as gTotal FROM orders where oEmail='"+usrmail+"'";
 		
 		Cursor c = db.rawQuery(selectQuery,null);
+
 	    int cnt = c.getCount();
-	    String cnnt = String.valueOf(cnt);
-	    Log.d("SQLITE TBL ROW COUNT :",cnnt);
+	    //String cnnt = String.valueOf(cnt);
+	    //Log.d("SQLITE TBL ROW COUNT :",cnnt);
 	    if(cnt>0){
         c.moveToFirst();
-        if (c != null) {
+        if (c != null && !c.isAfterLast()) {
             do {
             	Log.d("oDate in select","Query :"+c.getString(c.getColumnIndex("oDate")));
             	Log.d("Amount in select","Query :"+c.getInt(c.getColumnIndex("gTotal")));
@@ -97,6 +97,7 @@ public class MyOrders extends Activity {
 			builder.show();	        
 			c.close();
 	    }
+
         // Assign adapter to ListView
 	    //allordrlist.setAdapter(ladapter); 
 	}

@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+//import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,9 +45,10 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 	private AsyncWorker mAsyncTsk = new AsyncWorker(this);
 	public ProgressDialog progress;
 	private String uemail;
-	//private final String _DB_NAME = "CafeBeside.db";
-	//private SQLiteDatabase db = null;
-	
+/*	private final String _DB_NAME = "CafeBeside.db";
+	private SQLiteDatabase db = null;*/
+	public static int tAmnt=0; 
+
 	static final LauncherIcon[] ICONS = {
         new LauncherIcon(R.drawable.icon_five, "Todays Menu", "icon_five.png"),
         new LauncherIcon(R.drawable.icon_four, "My Orders", "icon_four.png"),
@@ -60,11 +62,7 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 		setContentView(R.layout.activity_home);
 		Configuration.IS_APP_RUNNING = true;
 		
-		//db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
-       // db.setVersion(3);
-      //  String selectQuery = "DELETE FROM orders";
 
-       // db.rawQuery(selectQuery,null);
 		
 		CafeNetworkValidator validator	=	new CafeNetworkValidator();
 		boolean isConnected				=	validator.isConnectedToCafeBeside(this);
@@ -87,6 +85,12 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 			}
 		});
 		
+		
+		/*db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
+        db.setVersion(3);
+        String selectQuery22 = "DELETE FROM orders";
+
+        db.rawQuery(selectQuery22,null);*/
 		
 		SharedPrefSingleton shpref;
 		shpref = SharedPrefSingleton.getInstance();
