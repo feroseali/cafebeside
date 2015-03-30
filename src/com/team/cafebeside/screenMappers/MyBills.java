@@ -153,17 +153,15 @@ public class MyBills extends Activity implements AsyncResponse {
 	}
 	
 	public void mlogout(){
-		try{
-			JSONObject mObject = new JSONObject();
-			mObject.put("email", umail);
-			mAsync = new AsyncWorker(getApplicationContext());
-			mAsync.delegate=MyBills.this;
-			mAsync.execute(ServerConnector.LOGOUT,mObject.toString());
-			}
-			catch(Exception ex){
-				Log.d("Exception:",""+ex);
-			}
-	}	
+		SharedPrefSingleton shb;
+		shb = SharedPrefSingleton.getInstance();
+		shb.init(getApplicationContext());
+		shb.writePreference("isLoggedIn", false);
+		shb.writeSPreference("email","");		
+		Intent signinIntent	=	new Intent(this,LoginPage.class);
+		startActivity(signinIntent);
+		finish();
+	}
 	
 	@Override
 	public void onBackPressed() {
@@ -228,7 +226,7 @@ public class MyBills extends Activity implements AsyncResponse {
 				
 			 }
 			}
-			else if(output.trim().equals("loggedout")){
+/*			else if(output.trim().equals("loggedout")){
 				SharedPrefSingleton.getInstance().init(getApplicationContext());
 				SharedPrefSingleton.getInstance().writePreference("isLoggedIn", false);
 				SharedPrefSingleton.getInstance().writeSPreference("email", null);
@@ -238,7 +236,7 @@ public class MyBills extends Activity implements AsyncResponse {
 			}
 			else if(output.trim().equals("loggedoutfailed")){
 				Toast.makeText(getApplicationContext(), "LogOut Failed!,Try Again!", Toast.LENGTH_SHORT).show();
-			}
+			}*/
 			else{
 				Toast.makeText(getApplicationContext(), output, Toast.LENGTH_SHORT).show();
 				tcnum.setText("");

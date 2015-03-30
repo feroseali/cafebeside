@@ -25,7 +25,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.team.cafebeside.R;
@@ -34,7 +34,6 @@ import com.team.cafebeside.networkEngine.AsyncResponse;
 import com.team.cafebeside.networkEngine.AsyncWorker;
 import com.team.cafebeside.workers.SharedPrefSingleton;
 //import android.widget.ListAdapter;
-import android.widget.TextView;
 
 public class Checkout extends Activity implements AsyncResponse{
 	private final String _DB_NAME = "CafeBeside.db";
@@ -193,8 +192,8 @@ public class Checkout extends Activity implements AsyncResponse{
 			if (resultCode == RESULT_OK) {
 				String contents = intent.getStringExtra("SCAN_RESULT");
 				String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-
-				Toast.makeText(this, "Content:" + contents + " Format:" + format, Toast.LENGTH_SHORT).show();
+				Log.d("Format:",format);
+				//Toast.makeText(this, "Content:" + contents + " Format:" + format, Toast.LENGTH_SHORT).show();
 				try {	    
 					String selectallQry = "SELECT oEmail,oDate,oFoodid,oItmName,oCat,oQuantity,oFprice,oInst,sTotal FROM orders where oDate = '" +FoodItem.formattedDate + "' and oEmail='"+FoodItem.unm+"'";
 					Cursor c = db.rawQuery(selectallQry,null);
@@ -277,8 +276,7 @@ public class Checkout extends Activity implements AsyncResponse{
 			return true;
 		}
 		else if(id== R.id.logout){	
-			mlogout();
-		
+			mlogout();		
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -291,6 +289,7 @@ public class Checkout extends Activity implements AsyncResponse{
 		shb = SharedPrefSingleton.getInstance();
 		shb.init(getApplicationContext());
 		shb.writePreference("isLoggedIn", false);
+		shb.writeSPreference("email","");
 		Intent signinIntent	=	new Intent(this,LoginPage.class);
 		startActivity(signinIntent);
 		finish();
@@ -325,8 +324,16 @@ public class Checkout extends Activity implements AsyncResponse{
 		 }
 		}
 		else{
-			Toast.makeText(getApplicationContext(), "Order placement failed,Try again!", Toast.LENGTH_SHORT).show();	
-
+			//Toast.makeText(getApplicationContext(),	output, Toast.LENGTH_SHORT).show();	
+			new AlertDialog.Builder(this)
+			.setTitle("Alert")
+			.setMessage(output)
+			.setPositiveButton(android.R.string.yes,
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int which) {
+						}
+					}).setIcon(android.R.drawable.ic_dialog_alert).show();
 		}
 	}	
 	

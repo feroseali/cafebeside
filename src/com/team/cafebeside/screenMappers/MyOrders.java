@@ -172,8 +172,7 @@ public class MyOrders extends Activity{
 			return true;
 		}
 		else if(id== R.id.logout){	
-			mlogout();
-		
+			mlogout();		
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -186,6 +185,7 @@ public class MyOrders extends Activity{
 		shb = SharedPrefSingleton.getInstance();
 		shb.init(getApplicationContext());
 		shb.writePreference("isLoggedIn", false);
+		shb.writeSPreference("email","");		
 		Intent signinIntent	=	new Intent(this,LoginPage.class);
 		startActivity(signinIntent);
 		finish();

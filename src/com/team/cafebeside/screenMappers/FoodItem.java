@@ -3,8 +3,6 @@ package com.team.cafebeside.screenMappers;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -23,12 +21,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.team.cafebeside.R;
-import com.team.cafebeside.configs.ServerConnector;
-import com.team.cafebeside.networkEngine.AsyncResponse;
-import com.team.cafebeside.networkEngine.AsyncWorker;
 import com.team.cafebeside.workers.SharedPrefSingleton;
 
-public class FoodItem extends Activity implements AsyncResponse {
+public class FoodItem extends Activity{
 	private Button b_ordr,_decrease,_increase;
 	private TextView fnm,fcat,fprice,_value;
 	private EditText spInst;
@@ -36,7 +31,6 @@ public class FoodItem extends Activity implements AsyncResponse {
     private static int _counter = 1;
     public static String formattedDate;
 	public ProgressDialog progress;
-	private AsyncWorker mAsyncWorker = new AsyncWorker(this);
 	private final String _DB_NAME = "CafeBeside.db";
 	private SQLiteDatabase db = null;
 
@@ -44,7 +38,6 @@ public class FoodItem extends Activity implements AsyncResponse {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		mAsyncWorker.delegate = this;
 		setContentView(R.layout.add_cart);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		SharedPrefSingleton shpref;
@@ -171,77 +164,23 @@ public class FoodItem extends Activity implements AsyncResponse {
 			return true;
 		}
 		else if(id== R.id.logout){	
-
-			try{
-				JSONObject mObject = new JSONObject();
-				mObject.put("email", unm);
-				mAsyncWorker = new AsyncWorker(getApplicationContext());
-				mAsyncWorker.delegate=FoodItem.this;
-				mAsyncWorker.execute(ServerConnector.LOGOUT,mObject.toString());
-				}
-				catch(Exception ex){
-					
-				}
-
-			
-			
-			 
-			
+			mlogout();		
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 	
-/*	public void mlogout(){
-		try{
-		SharedPrefSingleton shb;
-		shb = SharedPrefSingleton.getInstance();
-		shb.init(getApplicationContext());
-		unm = shb.getLoggedInUserPreference("email");
-		JSONObject mObject = new JSONObject();
-		mObject.put("email", unm);
-		mAsyncWorker = new AsyncWorker(getApplicationContext());
-		mAsyncWorker.delegate=FoodItem.this;
-		mAsyncWorker.execute(ServerConnector.LOGOUT,mObject.toString());
-		}
-		catch(Exception ex){
-			
-		}
-	}*/
-
-
-
-	private void showAlert(String title, String message) {
-		new AlertDialog.Builder(this)
-				.setTitle(title)
-				.setMessage(message)
-				.setPositiveButton(android.R.string.yes,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								// DO ANY CAFEBESIDE OPERATION
-							}
-						})
-
-				.setIcon(android.R.drawable.ic_dialog_alert).show();
-	}
-
-	@Override
-	public void processFinish(String output) {
-		// TODO Auto-generated method stub
-		if(!output.trim().equals("Success")){
-			showAlert("Alert", "Logout Failed");
-		}
-		else{
-			SharedPrefSingleton.getInstance().init(getApplicationContext());
-			SharedPrefSingleton.getInstance().writePreference("isLoggedIn", false);
-			SharedPrefSingleton.getInstance().writeSPreference("email", null);
-			Intent homeIntent	=	new Intent(this,LoginPage.class);
-			startActivity(homeIntent);
+		public void mlogout(){
+			SharedPrefSingleton shb;
+			shb = SharedPrefSingleton.getInstance();
+			shb.init(getApplicationContext());
+			shb.writePreference("isLoggedIn", false);
+			shb.writeSPreference("email","");
+			Intent signinIntent	=	new Intent(this,LoginPage.class);
+			startActivity(signinIntent);
 			finish();
 		}
-	}	
-	
+
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub

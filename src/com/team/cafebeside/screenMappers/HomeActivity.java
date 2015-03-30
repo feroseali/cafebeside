@@ -45,6 +45,7 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 	private AsyncWorker mAsyncTsk = new AsyncWorker(this);
 	public ProgressDialog progress;
 	private String uemail;
+	private static int activityFlag;
 
 	static final LauncherIcon[] ICONS = {
         new LauncherIcon(R.drawable.icon_five, "Todays Menu", "icon_five.png"),
@@ -82,13 +83,7 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 			}
 		});
 		
-		
-		/*db = openOrCreateDatabase(_DB_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
-        db.setVersion(3);
-        String selectQuery22 = "DELETE FROM orders";
-
-        db.rawQuery(selectQuery22,null);*/
-		
+	
 		SharedPrefSingleton shpref;
 		shpref = SharedPrefSingleton.getInstance();
 		shpref.init(getApplicationContext());
@@ -143,13 +138,25 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
     	
         switch(position){
-        case 0:	Intent i1 = new Intent(this, MenuList.class);
-        		startActivity(i1);
+        case 0:	try {
+        		activityFlag = 2;
+			    JSONObject mObject = new JSONObject();
+			    mObject.put("email", uemail);
+			    Log.d("JSON BILL INFO :", mObject.toString());
+			    mAsyncTsk = new AsyncWorker(v.getContext());
+			    mAsyncTsk.delegate=HomeActivity.this;
+			    mAsyncTsk.execute(ServerConnector.GET_BILLSTATUS, mObject.toString());
+			    //finish();
+		        } catch (Exception ex) {
+		    	Log.d("Exception","Exception occur "+ex);
+		        }
+        		
         		break;
         case 1: Intent i2 = new Intent(this, MyOrders.class);
 				startActivity(i2);	
 				break;
         case 2: try {
+    			activityFlag = 1;	
 			    JSONObject mObject = new JSONObject();
 			    mObject.put("email", uemail);
 			    Log.d("JSON BILL INFO :", mObject.toString());
@@ -276,12 +283,6 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 		}
 		else if(id== R.id.logout){	
 			mlogout();
-
-
-			
-			
-			
-			
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -292,6 +293,7 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 		shb = SharedPrefSingleton.getInstance();
 		shb.init(getApplicationContext());
 		shb.writePreference("isLoggedIn", false);
+		shb.writeSPreference("email","");
 		Intent signinIntent	=	new Intent(this,LoginPage.class);
 		startActivity(signinIntent);
 		finish();
@@ -301,43 +303,66 @@ public class HomeActivity extends Activity implements OnItemClickListener,AsyncR
 	public void processFinish(String output) {
 		// TODO Auto-generated method stub
 		try{	
-			if (output.contains("-")) {
-			    // Split it.
-			String[] parts = output.split("-");
-			String part1 = parts[0]; // success			
-			String part2 = parts[1]; // balance			
-        	    Intent i3 = new Intent(this, MyBills.class);
-        	    i3.putExtra("OrderDate", part1);
-        	    i3.putExtra("TotalAmount", part2);
-				startActivity(i3);
-				finish();
-			 }
-			 else{
-				 View bills = View.inflate(this, R.layout.bills_layout, null);
+					if (output.contains("#")) {
+						
+						if(activityFlag == 1){
+							// Split it.
+							String[] parts = output.split("#");
+							String part1 = parts[0]; // success			
+							String part2 = parts[1]; // balance			
+				        	    Intent i3 = new Intent(this, MyBills.class);
+				        	    i3.putExtra("OrderDate", part1);
+				        	    i3.putExtra("TotalAmount", part2);
+								startActivity(i3);
+								finish();
+						 }
+						 else if(activityFlag == 2){
+							 AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+								builder.setTitle("CafeBeside Info")
+								.setMessage("Sorry!,\nYou are already placed orders.\nBut not paid yet!\nPlease pay it first!")
+								.setCancelable(false);
+								builder.setPositiveButton("OK",
+										new DialogInterface.OnClickListener() {
+											public void onClick(DialogInterface dialog,
+													int which) {
+												Log.e("info", "OK");
+											}
+										});
+			
+								builder.show();	
+						 }
+					    
+					 }
+					 else{
+						 if(activityFlag == 1){
+							 View bills = View.inflate(this, R.layout.bills_layout, null);
+								
+							 AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+								builder.setTitle("CafeBeside Info");
+								//.setMessage("Thank you!,\nYour Payment Successfully Completed!\nBalance in your card :")
+								builder.setView(bills)
+								.setCancelable(false);
+								builder.setPositiveButton("OK",
+										new DialogInterface.OnClickListener() {
+											public void onClick(DialogInterface dialog,
+													int which) {
+												Log.e("info", "OK");
+											}
+										});
+			
+								builder.show();	 
+						 }
+						 else if(activityFlag == 2){
+							 Intent i1 = new Intent(this, MenuList.class);
+				        	 startActivity(i1);
+						 }		 
+						 		
+					}
 
-				 AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-					builder.setTitle("CafeBeside Info");
-					//.setMessage("Thank you!,\nYour Payment Successfully Completed!\nBalance in your card :")
-					builder.setView(bills)
-					.setCancelable(false);
-					builder.setPositiveButton("OK",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int which) {
-									Log.e("info", "OK");
-									//Intent home_intent = new Intent(getApplicationContext(),HomeActivity.class);
-									//startActivity(home_intent);
-									//finish();
-								}
-							});
-
-					builder.show();			
-				}
-		    
-			}
-		    catch(Exception ecc){
-			Log.d("EXception :","In server response "+ ecc);
-		    }
+		} // try
+		catch(Exception ecc){
+		Log.d("EXception :","In server response "+ ecc);
+		}
 	}
 	
 }

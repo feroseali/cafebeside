@@ -174,12 +174,6 @@ public class MenuList extends ListActivity {
 		}
 		else if(id== R.id.logout){	
 			mlogout();
-
-
-			
-			
-			
-			
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -190,6 +184,7 @@ public class MenuList extends ListActivity {
 		shb = SharedPrefSingleton.getInstance();
 		shb.init(getApplicationContext());
 		shb.writePreference("isLoggedIn", false);
+		shb.writeSPreference("email","");		
 		Intent signinIntent	=	new Intent(this,LoginPage.class);
 		startActivity(signinIntent);
 		finish();
